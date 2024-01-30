@@ -1,3 +1,4 @@
+import { useRoute } from "@react-navigation/native";
 import React, { Component, useState } from "react";
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 
@@ -11,21 +12,21 @@ class Addcar extends Component {
             color: "",
             car: null,
             error: false,
-            userId :this.props.route.params.user.userID
         };
-        const {carn,setCar} = useState("");
+        
     }
 
 
     upload = async () => {
+        const { route, navigation } = this.props;
+    const { user } = route.params;
         try {
-            const carInfo = await fetch(`http://localhost:8000/addCar?carName=${this.state.carName}&model=${this.state.model}&color=${this.state.color}&userId=${this.state.userId}`, {
+            const carInfo = await fetch(`http://localhost:8000/addCar?carName=${this.state.carName}&model=${this.state.model}&color=${this.state.color}&userId=${userId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'Application/json',
                     },
                 }
-                
                 );
 
             const json = await carInfo.json();
@@ -46,9 +47,11 @@ class Addcar extends Component {
     };
 
     render() {
-        const { navigation, route } = this.props;
-        const { selectedImage } = this.state;
-
+        const { navigation } = this.props;
+        const { route } = this.props;
+        const { User } = route.params;
+        console.log("add user:" + User.userID);
+        
         return (
             <View>
                 <Text>addcar</Text>

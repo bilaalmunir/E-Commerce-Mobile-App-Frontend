@@ -1,6 +1,8 @@
 import { View,Text,Button, TextInput, Pressable, useState} from 'react-native';
 // import React, { Component } from 'react';
 import React, {Component,PureComponent} from 'react';
+import { userSignup } from '../api/postApi';
+import Login from './Login';
 
 class Signup extends Component {
     constructor(props) {
@@ -11,34 +13,25 @@ class Signup extends Component {
             lastname: "",
             email: "",
             password: "",
+            loading: false,
+            res:false,
         }
     }
     render(){
         const {navigation} = this.props;
-            
-            // const [state, setState] = useState({
-            //     bilal: 0
-            // })
-            // setState({
-            //     ...state,
-            //     bilal:
-            // })
          
         const handleSubmit = async () => {
-            try {
-                console.log("handling sign up now")
-            const response = await fetch(`http://localhost:8000/registerUser?username=${this.state.username}&firstname=${this.state.firstname}&lastname=${this.state.lastname}&email=${this.state.email}&password=${this.state.password}`,{
-                method:'POST',
-                headers: {
-                    'Content-Type' : 'Application/json',
-                },
-                
+            this.setState({
+                loading: true
             })
-            console.log("this is sign up response:",response)
-        }catch (error) {
-                console.error(error);
+            response = await userSignup(this.state.username,this.state.firstname,this.state.lastname,this.state.email,this.state.password)
+            if(response){
+                this.setState({
+                    loading: false,
+                    res:true
+                })
+                 console.log("this is sign up response in if statement:",response)
             }
-
 
         }
         return(
@@ -71,6 +64,9 @@ class Signup extends Component {
                 onChangeText={(text) => this.setState({password : text})}
             />
             <Pressable title='Submit' onPress={() => handleSubmit()}><Text>Submit here</Text></Pressable>
+            {this.state.res?(
+                this.props.navigation.navigate('Login',{uName : this.state.username})
+            ):(this.state.loading?(<Text>please wait...</Text>):(null))}
             </View>
 
         );

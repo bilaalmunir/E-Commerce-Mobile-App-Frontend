@@ -1,10 +1,12 @@
 import React, { Component, PureComponent } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import Addcar from './Addcar';
 
 class Mainpage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            error:false,
             cars: null,
             isFetching: false,
         };
@@ -26,7 +28,20 @@ class Mainpage extends Component {
             });
         }
     }
-
+    carPage = () => {
+        const { navigation } = this.props;
+        const { route } = this.props;
+        const { user } = route.params;
+        console.log("userrrr:"+user)
+        console.log("user:" + user.userID);
+        const id=user.userID
+        // if (!this.state.error) {
+        //     this.props.navigation.navigate('Addcar', { userId: user.userID });
+        // } else {
+        //     this.state({ error: true });
+        // }
+        !this.state.error? navigation.navigate('Addcar', { User: user }) : null
+    };
     getCars = async () => {
         try {
             const res = await fetch(`http://localhost:8000/getAllCars`, {
@@ -54,13 +69,7 @@ class Mainpage extends Component {
         const { user } = route.params;
         console.log("user:" + user.userID);
 
-        const carPage = () => {
-            if (true) {
-                this.props.navigation.navigate('Addcar', { user: user });
-            } else {
-                this.state({ error: true });
-            }
-        };
+        
 
         const showDetails = (detail) => {
             if (true) {
@@ -74,7 +83,7 @@ class Mainpage extends Component {
         return (
             <View>
               <Text>User name: {user.username} </Text>
-              <TouchableOpacity title="addCar" onPress={() => carPage()}>
+              <TouchableOpacity  onPress={() => this.carPage()}>
                 <Text>Add Car</Text>
               </TouchableOpacity>
           

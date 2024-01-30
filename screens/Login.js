@@ -2,6 +2,7 @@ import { View,Text,TextInput,Pressable} from 'react-native';
 // import React, { Component } from 'react';
 import React, {Component,PureComponent} from 'react';
 import Mainpage from './Mainpage';
+import { userLogin } from '../api/putApi';
 
 
 class Login extends Component {
@@ -16,23 +17,12 @@ class Login extends Component {
     }
     render(){
         const {navigation} = this.props;
-        
         const handleLoginSubmit = async () => {
-            try {
-                const response = await fetch(`http://192.168.102.7:8000/loginUser?username=${this.state.username}&password=${this.state.password}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'Application/json',
-                    },
-                }
-                
-                );
-                const json = await response.json();
+           
+                const json = await userLogin(this.state.username,this.state.password);
                 console.log(json)
-                
                 if (json.userID) {
-                    this.setState({ user: json, error: false }); // Clear the error state
-                  //  this.props.navigation.navigate('MainPage', { user: json.userID });
+                    this.setState({ user: json, error: false }); 
                   this.props.navigation.navigate('MainPage', {user:json});
                     console.log("id agai");
                     console.log("heyhey"+ json);
@@ -41,15 +31,7 @@ class Login extends Component {
                 } else {
                     this.setState({error:true});
                     console.log("id nai ai");
-                }
-                
-
-            } catch (error) {
-                console.error(error);
-                this.setState({error:true})
-            }
-
-        
+                }        
         }
 
         return(
