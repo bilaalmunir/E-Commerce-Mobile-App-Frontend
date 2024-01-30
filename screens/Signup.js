@@ -44,7 +44,7 @@ class Signup extends Component {
         return(
 
             <View>
-            <Text>Sign Up</Text>
+            <Text>To Register Enter details!</Text>
             <TextInput 
                 placeholder="Enter username"
                 value={this.state.username}
@@ -70,7 +70,7 @@ class Signup extends Component {
                 value={this.state.password}
                 onChangeText={(text) => this.setState({password : text})}
             />
-            <Pressable title='Submit' onPress={() => handleSubmit()}> <Text>Signup</Text></Pressable>
+            <Pressable title='Submit' onPress={() => handleSubmit()}><Text>Submit here</Text></Pressable>
             </View>
 
         );

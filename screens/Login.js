@@ -48,11 +48,14 @@ class Login extends Component {
                 console.error(error);
                 this.setState({error:true})
             }
+
+        
         }
 
         return(
             <View>
-            <Text>Sign in Here:</Text>
+             {/* <Text>Sign in Here:</Text>  */}
+             <Text>Enter Credentials:</Text>
             <View>
             <TextInput 
                 placeholder="Enter username"
@@ -64,20 +67,21 @@ class Login extends Component {
                 value={this.state.password}
                 onChangeText={(text) => this.setState({password : text})}
             />
-             <Pressable title='logInSubmit' onPress={() => handleLoginSubmit()}> <Text>Log in</Text></Pressable>
-             {this.state.error ? (
-  <View>
-    <Text>Username or password incorrect!</Text>
-  </View>
-) : (
-  this.state.user && this.state.user.userId ? (
-    navigation.navigate('MainPage', { userID: this.state.user.userId })
+             <Pressable  onPress={() => handleLoginSubmit()}> 
+             <Text>Enter</Text> 
+             </Pressable>
+                  {this.state.error ? (
+
+       <Text>Entered login or password is incorrect</Text>
+   
   ) : (
-    <View>
-      <Text>Sign in</Text>
-    </View>
-  )
-)}</View>
+   this.state.user && this.state.user.userId ? (
+      this.props.navigation.navigate('MainPage', { userID: this.state.user.userId })
+    ) : (
+        null
+    )
+  )}
+             </View>
             </View>
 
         );

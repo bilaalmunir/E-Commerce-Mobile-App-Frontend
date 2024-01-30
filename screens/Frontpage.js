@@ -7,8 +7,10 @@ class FrontPage extends PureComponent {
         const {navigation} = this.props;
         return(
             <View>
-                <Pressable title="Login" onPress={() => navigation.navigate('Login')}> <Text>Login</Text></Pressable>
-                <Pressable title='SignUp' onPress={() => navigation.navigate('Signup')}> <Text>Signup</Text></Pressable>
+            <Text>hi</Text>
+            <Pressable title="Login" onPress={() => navigation.navigate('Login')}><Text>log in</Text></Pressable>
+            <Pressable title='SignUp' onPress={() => navigation.navigate('Signup')}><Text>sign up</Text></Pressable> 
+                
             </View>
 
         );
