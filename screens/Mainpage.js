@@ -1,7 +1,8 @@
 import React, { Component, PureComponent } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import Addcar from './Addcar';
-
+//import getProducts from '../api/getApi';
+import { getProducts } from '../api/getApi';
 class Mainpage extends Component {
     constructor(props) {
         super(props);
@@ -14,15 +15,18 @@ class Mainpage extends Component {
     }
 
     componentDidMount() {
-        this.getCars();
+        this.getP();
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.cars !== prevState.cars && !this.state.isFetching) {
+            console.log("if chal rha hai?")
             this.setState({ isFetching: true }, () => {
                 setTimeout(() => {
                     if (this.state.isFetching) {
-                        this.getCars();
+                        console.log("fetching true")
+                        this.setState({ isFetching: false });
+                        this.getP()
                     }
                 }, 5000);
             });
@@ -32,43 +36,33 @@ class Mainpage extends Component {
         const { navigation } = this.props;
         const { route } = this.props;
         const { user } = route.params;
-        console.log("userrrr:"+user)
-        console.log("user:" + user.userID);
-        const id=user.userID
-        // if (!this.state.error) {
-        //     this.props.navigation.navigate('Addcar', { userId: user.userID });
-        // } else {
-        //     this.state({ error: true });
-        // }
         !this.state.error? navigation.navigate('Addcar', { User: user }) : null
     };
-    getCars = async () => {
-        try {
-            const res = await fetch(`http://localhost:8000/getAllCars`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'Application/json',
-                },
-            });
-            const json = await res.json();
-            console.log(json);
+    getP = async () => {
+        try{
+            const json = await getProducts()
+            console.log("products:"+json.length);
             if (json) {
                 this.setState({ cars: json, isFetching: false });
-               // console.log("if :" + this.state.cars);
+                //console.log("if :" + this.state.cars);
             } else {
                 console.log("data nai aya");
+                this.setState({ isFetching: false });
             }
-        } catch {
-            console.log("hehehehuhuhuhuhahahahhaha catch");
+        }catch(error){
+            console.error("Error fetching data:", error);
+        this.setState({ isFetching: false });
         }
-    };
+            
+        
+    }
 
     render() {
         const { navigation } = this.props;
         const { route } = this.props;
         const { user } = route.params;
         console.log("user:" + user.userID);
-
+        //console.log("products data in state:"+ this.state.cars)
         
 
         const showDetails = (detail) => {
@@ -81,27 +75,63 @@ class Mainpage extends Component {
         };
 
         return (
-            <View>
-              <Text>User name: {user.username} </Text>
-              <TouchableOpacity  onPress={() => this.carPage()}>
-                <Text>Add Car</Text>
-              </TouchableOpacity>
-          
-              {this.state.cars ? (
-                <View>
-                  {this.state.cars.map((car) => (
-                    <TouchableOpacity key={car.ID} onPress={() => showDetails(car)}>
-                      <Text>Car Name: {car.carName}</Text>
-                    </TouchableOpacity>
-                  ))}
+            <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.username}>User name: {user.username}</Text>
+          <TouchableOpacity onPress={() => this.carPage()}>
+            <Text style={styles.addCarButton}>Add Car</Text>
+          </TouchableOpacity>
+        </View>
+
+        {this.state.cars && this.state.cars.length > 0 ? (
+          <View>
+            {this.state.cars.map((car) => (
+              <TouchableOpacity key={car.ID} onPress={() => showDetails(car)}>
+                <View style={styles.carBox}>
+                  <Text style={styles.carName}>Car Name: {car.carName}</Text>
                 </View>
-              ) : (
-                <Text>No cars available</Text>
-              )}
-            </View>
-          );
-          
-    }
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : (
+          <Text>No cars available</Text>
+        )}
+      </ScrollView>
+    );
+  }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  username: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  addCarButton: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'blue', // or any color you prefer
+    textAlign: 'right',
+  },
+  carBox: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  carName: {
+    fontSize: 16,
+  },
+});
 export default Mainpage;

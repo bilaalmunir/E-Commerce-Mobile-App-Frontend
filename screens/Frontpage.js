@@ -1,4 +1,4 @@
-import { View,Text,Button,Pressable} from 'react-native';
+import { View,Text,Button,Pressable,StyleSheet} from 'react-native';
 import React, {Component,PureComponent} from 'react';
 
 
@@ -6,15 +6,41 @@ class FrontPage extends PureComponent {
     render(){
         const {navigation} = this.props;
         return(
-            <View>
-            <Text>hi</Text>
-            <Pressable title="Login" onPress={() => navigation.navigate('Login')}><Text>log in</Text></Pressable>
-            <Pressable title='SignUp' onPress={() => navigation.navigate('Signup')}><Text>sign up</Text></Pressable> 
+            <View style={styles.container}>
+            <Text style={styles.title}>Welcome!</Text>
+            <Pressable style={styles.button} title="Login" onPress={() => navigation.navigate('Login')}><Text style={styles.buttonText}>log in</Text></Pressable>
+            <Pressable style={styles.button} title='SignUp' onPress={() => navigation.navigate('Signup')}><Text style={styles.buttonText}>sign up</Text></Pressable> 
                 
             </View>
 
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 30,
+    },
+    button: {
+        backgroundColor: '#3498db',
+        padding: 15,
+        borderRadius: 8,
+        marginVertical: 10,
+        width: 200,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+});
 
 export default FrontPage;

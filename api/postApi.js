@@ -15,3 +15,23 @@ export async function userSignup(username,firstname,lastname,email,password){
         return error
     }
 }
+
+export async function addProduct(carName,model,color,userId){
+    try{
+        const carInfo = await fetch(`http://192.168.181.7:8000/addCar?carName=${carName}&model=${model}&color=${color}&userId=${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'Application/json',
+                    },
+                }
+                );
+                if (carInfo.ok) {
+                    return await carInfo.json();
+                } else {
+                    throw new Error('Failed to add car');
+                }
+            } catch (error) {
+                console.error('Error adding car:', error);
+                return { error: 'Failed to add car' };
+            }
+}
