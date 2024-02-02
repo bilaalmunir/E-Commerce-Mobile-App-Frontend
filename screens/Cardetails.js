@@ -2,12 +2,14 @@ import { Component } from "react";
 import { View,Text, TouchableOpacity, StyleSheet } from "react-native";
 import { getProductInfo } from "../api/getApi";
 import { deleteProduct } from "../api/deleteApi";
+import { setWishlistItem } from "../api/postApi";
 
 class Cardetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bought: false,
+      listed:false,
     };
   }
   componentDidUpdate() {
@@ -22,6 +24,7 @@ class Cardetails extends Component {
     console.log("car id" + detail.id);
     console.log("user id" + user.userID);
     console.log("car published by:" + detail.publishedBy);
+
     const buyCar = async () => {
       const response = await getProductInfo(detail.id,user.userID)
       const json = await response.json();
@@ -31,6 +34,7 @@ class Cardetails extends Component {
         console.log("itna chal gya");
       }
     };
+
     const deleteCar = async () => {
       const response = await deleteProduct(detail.id)
       if (response !== undefined) {
@@ -43,6 +47,19 @@ class Cardetails extends Component {
         console.error("Invalid response:", response);
       }
     };
+
+    const addToWishlist = async () => {
+      response = await setWishlistItem(user.userID,detail.id)
+      if(response !== undefined){
+        console.log("json addtoWishlist API")
+      }
+      if(response === 200){
+        console.log("added to users's wishlist!")
+        this.setState({listed:true})
+      } else {
+        console.error("error adding to wishlist: ", response)
+      }
+    }
     return (
       <View style={carDetailStyles.container}>
       <Text>Published By: {detail.publishedBy}</Text>
@@ -71,7 +88,21 @@ class Cardetails extends Component {
           </TouchableOpacity>
         </View>
       ) : null}
+      {
+        detail.publishedBy === user.userID ? (
+          null
+        ):(this.state.listed?
+         (<Text>Added to wishslist!</Text>)
+         :
+         (<View> 
+          <TouchableOpacity onPress={() => addToWishlist()}>
+            <Text> Add to wishlist!</Text>
+          </TouchableOpacity>
+          </View>)
+        )
+      }
     </View>
+    
     );
   }
 }

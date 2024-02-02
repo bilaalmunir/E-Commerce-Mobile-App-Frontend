@@ -35,3 +35,28 @@ export async function addProduct(carName,model,color,userId){
                 return { error: 'Failed to add car' };
             }
 }
+
+export async function setWishlistItem(userId,productId){
+    try{
+        const response = await fetch(`http://192.168.181.7:8000/setWishlistItem?userId=${userId}&productId=${productId}`,
+    {
+        method: 'POST',
+        headers: {
+            'content-Type' : 'Application/json',
+        },
+    });
+    if (response.ok) {
+        const jsonResponse = await response.json();
+  
+        if (jsonResponse === "added to watchlist!") {
+          return response;
+        } else {
+          throw new Error("Unexpected response from the server");
+        }
+      } else {
+        throw new Error("Error adding to wishlist!");
+      }
+    } catch (error) {
+      return error;
+    }
+  }
