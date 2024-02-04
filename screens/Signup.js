@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, Pressable,Image, StyleSheet, Button } from 'react-native';
+
 import { userSignup } from '../api/postApi';
 import * as ImagePicker from 'expo-image-picker';
 class Signup extends Component {
