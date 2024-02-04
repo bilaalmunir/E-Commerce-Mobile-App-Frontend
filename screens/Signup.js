@@ -77,10 +77,13 @@ class Signup extends Component {
                     <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
                 {this.state.res ? (
-                    this.props.navigation.navigate('Login', { uName: this.state.username })
+                    this.props.navigation.replace('Login', { uName: this.state.username })
                 ) : this.state.loading ? (
                     <Text style={styles.loadingText}>Please wait...</Text>
                 ) : null}
+                <Pressable onPress={()=> this.props.navigation.replace('Login')}>
+                    <Text>do you have an account?</Text>
+                </Pressable>
             </View>
         );
     }

@@ -39,7 +39,7 @@ class Addcar extends Component {
     
             if (json.carName) {
                 this.setState({ car: json, error: false, carName: '', model: '', color: '' });
-                await navigation.navigate('MainPage', { user: User });
+                await navigation.goBack();
                 console.log("car: " + json.carName);
             } else {
                 this.setState({ error: true });

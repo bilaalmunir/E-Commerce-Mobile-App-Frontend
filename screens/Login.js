@@ -22,7 +22,6 @@ class Login extends Component {
         if (json.userID) {
             this.setState({ user: json, error: false }); 
           this.props.navigation.replace('MainPage', {user:json});
-            console.log("id agai");
             console.log("heyhey"+ json);
             
             //console.log("hehe"+ json.userID);
@@ -58,7 +57,11 @@ class Login extends Component {
                 </Pressable>
             </View>
             {this.state.error && <Text style={styles.errorText}>Incorrect login or password</Text>}
+            <Pressable onPress={()=> this.props.navigation.replace('Signup')}>
+                    <Text>do not have an account?</Text>
+                </Pressable>
         </View>
+        
 
 
         );

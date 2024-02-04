@@ -28,11 +28,12 @@ class App extends Component {
       <Stack.Screen name="Frontpage" component={FrontPage} />
       <Stack.Screen name="Login" component={Login} /> 
       <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="MainPage" component={MainPage}/>
-      <Stack.Screen name="Addcar" component={Addcar}/>
+     <Stack.Screen name="MainPage" component={MainPage}/>
+      <Stack.Screen name="Addcar" component={Addcar}/> 
       <Stack.Screen name="Cardetails" component={Cardetails}/>
     </Stack.Navigator>
   </NavigationContainer>
+  
    );
  }
 }
