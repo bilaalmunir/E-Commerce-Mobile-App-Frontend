@@ -2,7 +2,7 @@ import { useRoute } from "@react-navigation/native";
 import React, { Component, useState } from "react";
 import { View, Text, Image, Button,TextInput, TouchableOpacity,StyleSheet, Alert} from 'react-native';
 import { addProduct } from "../api/postApi";
-import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 class Addcar extends Component {
     constructor(props) {
@@ -13,11 +13,19 @@ class Addcar extends Component {
             color: "",
             car: null,
             error: false,
-            selectedImage:"../assests/default.PNG",
+            selectedImage: null ,
         };
         
     }
-
+    componentDidMount() {
+      this.getPermissionAsync();
+    }
+    getPermissionAsync = async () => {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        console.error('Permission to access media library was denied');
+      }
+    };
 
     upload = async () => {
         const { navigation, route } = this.props;
@@ -43,66 +51,62 @@ class Addcar extends Component {
             this.setState({ error: true });
         }
     };
-    openImagePicker = () => {
-      ImagePicker.showImagePicker(
-        {
-          title: 'Select Image',
-          cancelButtonTitle: 'Cancel',
-          takePhotoButtonTitle: 'Take Photo',
-          chooseFromLibraryButtonTitle: 'Choose from Library',
-        },
-        (response) => {
-          if (response.didCancel) {
-            console.log('User cancelled image picker');
-          } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
-          } else {
-            // Update state with the selected image URI
-            this.setState({ selectedImage: response.uri });
-          }
-        },
-      );
+    openImagePicker = async() => {
+      // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      this.setState({ selectedImage: result.assets[0].uri });
+    }
     };
 
     render() {
         const { navigation } = this.props;
         const { route } = this.props;
         const { User } = route.params;
-        console.log("add user:" + User.userID);
+        console.log("addpage mein user ka data:" + User.userID);
         const UID = User.userID
         
         return (
-            <View style={carFormStyles.container}>
+            <><View style={carFormStyles.container}>
             <Text style={carFormStyles.heading}>Add Car</Text>
-    
+
             <TextInput
               style={carFormStyles.input}
               placeholder="Car Name"
               value={this.state.carName}
-              onChangeText={(text) => this.setState({ carName: text })}
-            />
+              onChangeText={(text) => this.setState({ carName: text })} />
             <TextInput
               style={carFormStyles.input}
               placeholder="Model"
               value={this.state.model}
-              onChangeText={(text) => this.setState({ model: text })}
-            />
+              onChangeText={(text) => this.setState({ model: text })} />
             <TextInput
               style={carFormStyles.input}
               placeholder="Color"
               value={this.state.color}
-              onChangeText={(text) => this.setState({ color: text })}
-            />
-    
+              onChangeText={(text) => this.setState({ color: text })} />
+
             <TouchableOpacity style={carFormStyles.addButton} onPress={this.upload}>
               <Text style={carFormStyles.addButtonText}>ADD</Text>
             </TouchableOpacity>
-
-            {this.selectedImage && (
-          <Image source={{ uri: selectedImage }} style={{ width: 200, height: 200 }} />
-        )}
-        <Button title="Open Image Picker" onPress={this.openImagePicker} />
           </View>
+          <View>
+          
+        <Button title="Open Image Picker" onPress={this.openImagePicker} />
+        {console.log(this.state.selectedImage)}
+        {this.state.selectedImage && (
+          <Image source={{ uri: this.state.selectedImage }} style={{ width: 200, height: 200 }} />
+        )}
+            </View>
+            </>
         );
     }
 }

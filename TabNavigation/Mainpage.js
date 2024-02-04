@@ -1,8 +1,9 @@
 import React, { Component, PureComponent } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import Addcar from './Addcar';
+import Addcar from '../screens/Addcar';
 //import getProducts from '../api/getApi';
 import { getProducts } from '../api/getApi';
+
 class Mainpage extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +37,7 @@ class Mainpage extends Component {
         const { navigation } = this.props;
         const { route } = this.props;
         const { user } = route.params;
+        //console.log("add page mein jatay huvay user ka data"+user.userID)
         !this.state.error? navigation.navigate('Addcar', { User: user }) : null
     };
     getP = async () => {

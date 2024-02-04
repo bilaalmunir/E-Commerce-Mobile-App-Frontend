@@ -1,7 +1,7 @@
 import { View,Text,TextInput,Pressable,StyleSheet} from 'react-native';
 // import React, { Component } from 'react';
 import React, {Component,PureComponent} from 'react';
-import Mainpage from './Mainpage';
+import Mainpage from '../TabNavigation/Mainpage';
 import { userLogin } from '../api/putApi';
 
 
@@ -21,7 +21,7 @@ class Login extends Component {
         console.log(json)
         if (json.userID) {
             this.setState({ user: json, error: false }); 
-          this.props.navigation.navigate('MainPage', {user:json});
+          this.props.navigation.replace('MainPage', {user:json});
             console.log("id agai");
             console.log("heyhey"+ json);
             

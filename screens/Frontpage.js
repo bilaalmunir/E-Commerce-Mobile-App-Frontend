@@ -8,8 +8,8 @@ class FrontPage extends PureComponent {
         return(
             <View style={styles.container}>
             <Text style={styles.title}>Welcome!</Text>
-            <Pressable style={styles.button} title="Login" onPress={() => navigation.navigate('Login')}><Text style={styles.buttonText}>log in</Text></Pressable>
-            <Pressable style={styles.button} title='SignUp' onPress={() => navigation.navigate('Signup')}><Text style={styles.buttonText}>sign up</Text></Pressable> 
+            <Pressable style={styles.button} title="Login" onPress={() => navigation.replace('Login')}><Text style={styles.buttonText}>log in</Text></Pressable>
+            <Pressable style={styles.button} title='SignUp' onPress={() => navigation.replace('Signup')}><Text style={styles.buttonText}>sign up</Text></Pressable> 
                 
             </View>
 
