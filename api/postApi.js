@@ -1,7 +1,7 @@
 export async function userSignup(username,firstname,lastname,email,password){
     try {
         console.log("handling sign up now")
-    const response = await fetch(`http://192.168.181.7:8000/registerUser?username=${username}&firstname=${firstname}&lastname=${lastname}&email=${email}&password=${password}`,{
+    const response = await fetch(`http://192.168.205.7:8000/registerUser?username=${username}&firstname=${firstname}&lastname=${lastname}&email=${email}&password=${password}`,{
         method:'POST',
         headers: {
             'Content-Type' : 'Application/json',
@@ -18,7 +18,7 @@ export async function userSignup(username,firstname,lastname,email,password){
 
 export async function addProduct(carName,model,color,userId){
     try{
-        const carInfo = await fetch(`http://192.168.181.7:8000/addCar?carName=${carName}&model=${model}&color=${color}&userId=${userId}`, {
+        const carInfo = await fetch(`http://192.168.205.7:8000/addCar?carName=${carName}&model=${model}&color=${color}&userId=${userId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'Application/json',
@@ -38,7 +38,7 @@ export async function addProduct(carName,model,color,userId){
 
 export async function setWishlistItem(userId,productId){
     try{
-        const response = await fetch(`http://192.168.181.7:8000/setWishlistItem?userId=${userId}&productId=${productId}`,
+        const response = await fetch(`http://192.168.205.7:8000/setWishlistItem?userId=${userId}&productId=${productId}`,
     {
         method: 'POST',
         headers: {

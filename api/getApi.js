@@ -1,6 +1,6 @@
 export async function getProducts(){
     try {
-        const res = await fetch(`http://192.168.181.7:8000/getAllCars`, {
+        const res = await fetch(`http://192.168.205.7:8000/getAllCars`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'Application/json',
@@ -13,7 +13,7 @@ export async function getProducts(){
 
 export async function getProductInfo(productId,userId){
     try{const response = await fetch(
-        `http://192.168.181.7:8000/buyCar?ID=${productId}&userID=${userId}`,
+        `http://192.168.205.7:8000/buyCar?ID=${productId}&userID=${userId}`,
         {
           method: "PUT",
           headers: {

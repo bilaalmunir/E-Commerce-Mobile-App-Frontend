@@ -1,8 +1,8 @@
 import { useRoute } from "@react-navigation/native";
 import React, { Component, useState } from "react";
-import { View, Text, Image, TextInput, TouchableOpacity,StyleSheet, Alert} from 'react-native';
+import { View, Text, Image, Button,TextInput, TouchableOpacity,StyleSheet, Alert} from 'react-native';
 import { addProduct } from "../api/postApi";
-
+import ImagePicker from 'react-native-image-picker';
 
 class Addcar extends Component {
     constructor(props) {
@@ -13,6 +13,7 @@ class Addcar extends Component {
             color: "",
             car: null,
             error: false,
+            selectedImage:"../assests/default.PNG",
         };
         
     }
@@ -41,6 +42,26 @@ class Addcar extends Component {
             // Handle the error as needed
             this.setState({ error: true });
         }
+    };
+    openImagePicker = () => {
+      ImagePicker.showImagePicker(
+        {
+          title: 'Select Image',
+          cancelButtonTitle: 'Cancel',
+          takePhotoButtonTitle: 'Take Photo',
+          chooseFromLibraryButtonTitle: 'Choose from Library',
+        },
+        (response) => {
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else {
+            // Update state with the selected image URI
+            this.setState({ selectedImage: response.uri });
+          }
+        },
+      );
     };
 
     render() {
@@ -76,6 +97,11 @@ class Addcar extends Component {
             <TouchableOpacity style={carFormStyles.addButton} onPress={this.upload}>
               <Text style={carFormStyles.addButtonText}>ADD</Text>
             </TouchableOpacity>
+
+            {this.selectedImage && (
+          <Image source={{ uri: selectedImage }} style={{ width: 200, height: 200 }} />
+        )}
+        <Button title="Open Image Picker" onPress={this.openImagePicker} />
           </View>
         );
     }
