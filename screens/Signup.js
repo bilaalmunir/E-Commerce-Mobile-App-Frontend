@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Pressable,Image, StyleSheet, Button } from 'react-native';
 import { userSignup } from '../api/postApi';
-
+import * as ImagePicker from 'expo-image-picker';
 class Signup extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +15,27 @@ class Signup extends Component {
             res: false,
         };
     }
-
+    getPermissionAsync = async () => {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          console.error('Permission to access media library was denied');
+        }
+      };
+      openImagePicker = async() => {
+        // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      console.log(result);
+  
+      if (!result.canceled) {
+        this.setState({ selectedImage: result.assets[0].uri });
+      }
+      };
     handleSubmit = async () => {
         this.setState({
             loading: true,
@@ -40,39 +60,34 @@ class Signup extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <><View style={styles.container}>
                 <Text style={styles.title}>To Register, Enter Details:</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter username"
                     value={this.state.username}
-                    onChangeText={(text) => this.setState({ username: text })}
-                />
+                    onChangeText={(text) => this.setState({ username: text })} />
                 <TextInput
                     style={styles.input}
                     placeholder="Enter Firstname"
                     value={this.state.firstname}
-                    onChangeText={(text) => this.setState({ firstname: text })}
-                />
+                    onChangeText={(text) => this.setState({ firstname: text })} />
                 <TextInput
                     style={styles.input}
                     placeholder="Enter LastName"
                     value={this.state.lastname}
-                    onChangeText={(text) => this.setState({ lastname: text })}
-                />
+                    onChangeText={(text) => this.setState({ lastname: text })} />
                 <TextInput
                     style={styles.input}
                     placeholder="Enter Email"
                     value={this.state.email}
-                    onChangeText={(text) => this.setState({ email: text })}
-                />
+                    onChangeText={(text) => this.setState({ email: text })} />
                 <TextInput
                     style={styles.input}
                     placeholder="Enter Password"
                     value={this.state.password}
                     onChangeText={(text) => this.setState({ password: text })}
-                    secureTextEntry={true}
-                />
+                    secureTextEntry={true} />
                 <Pressable style={styles.button} onPress={this.handleSubmit}>
                     <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
@@ -81,10 +96,18 @@ class Signup extends Component {
                 ) : this.state.loading ? (
                     <Text style={styles.loadingText}>Please wait...</Text>
                 ) : null}
-                <Pressable onPress={()=> this.props.navigation.replace('Login')}>
+                <Pressable onPress={() => this.props.navigation.replace('Login')}>
                     <Text>do you have an account?</Text>
                 </Pressable>
             </View>
+            <View>
+
+                    <Button title="Open Image Picker" onPress={this.openImagePicker} />
+                    {console.log(this.state.selectedImage)}
+                    {this.state.selectedImage && (
+                        <Image source={{ uri: this.state.selectedImage }} style={{ width: 200, height: 200 }} />
+                    )}
+                </View></>
         );
     }
 }
