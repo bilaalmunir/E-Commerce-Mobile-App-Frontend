@@ -38,9 +38,9 @@ catch(error){
     console.log(error)
 }}
 
-export async function addProduct(carName,model,color,userId){
+export async function addProduct(carName,model,color,price,userId){
     try{
-        const carInfo = await fetch(`http://192.168.205.7:8000/addCar?carName=${carName}&model=${model}&color=${color}&userId=${userId}`, {
+        const carInfo = await fetch(`http://192.168.189.7:8000/addCar?carName=${carName}&model=${model}&color=${color}&price=${price}&userId=${userId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'Application/json',

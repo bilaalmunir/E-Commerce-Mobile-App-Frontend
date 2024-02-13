@@ -11,6 +11,7 @@ class Addcar extends Component {
             carName: "",
             model: "",
             color: "",
+            price:"",
             car: null,
             error: false,
             selectedImage: null ,
@@ -30,15 +31,15 @@ class Addcar extends Component {
     upload = async () => {
         const { navigation, route } = this.props;
         const { user } = route.params;
-        if (!this.state.carName || !this.state.model || !this.state.color) {
+        if (!this.state.carName || !this.state.model || !this.state.color || !this.state.price) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
           }
         try {
-            const json = await addProduct(this.state.carName, this.state.model, this.state.color, user.userID);
+            const json = await addProduct(this.state.carName, this.state.model, this.state.color,this.state.price, user.userID);
     
             if (json.carName) {
-                this.setState({ car: json, error: false, carName: '', model: '', color: '' });
+                this.setState({ car: json, error: false, carName: '', model: '', color: '' ,price:''});
                 await navigation.goBack();
                 console.log("car: " + json.carName);
             } else {
@@ -94,6 +95,12 @@ class Addcar extends Component {
               placeholder="Color"
               value={this.state.color}
               onChangeText={(text) => this.setState({ color: text })} />
+              <TextInput
+              style={carFormStyles.input}
+              placeholder="Price"
+              value={this.state.price}
+              onChangeText={(text) => this.setState({ price: text })} />
+              
 
             <TouchableOpacity style={carFormStyles.addButton} onPress={this.upload}>
               <Text style={carFormStyles.addButtonText}>ADD</Text>
