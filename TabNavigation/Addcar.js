@@ -29,13 +29,13 @@ class Addcar extends Component {
 
     upload = async () => {
         const { navigation, route } = this.props;
-        const { User } = route.params;
+        const { user } = route.params;
         if (!this.state.carName || !this.state.model || !this.state.color) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
           }
         try {
-            const json = await addProduct(this.state.carName, this.state.model, this.state.color, User.userID);
+            const json = await addProduct(this.state.carName, this.state.model, this.state.color, user.userID);
     
             if (json.carName) {
                 this.setState({ car: json, error: false, carName: '', model: '', color: '' });
@@ -70,9 +70,10 @@ class Addcar extends Component {
     render() {
         const { navigation } = this.props;
         const { route } = this.props;
-        const { User } = route.params;
-        console.log("addpage mein user ka data:" + User.userID);
-        const UID = User.userID
+        const { user } = route.params ;
+        console.log("user:" + user.userID);
+        console.log("addpage mein user ka data:" + user.userID);
+        const UID = user.userID
         
         return (
             <><View style={carFormStyles.container}>

@@ -1,20 +1,42 @@
-export async function userSignup(username,firstname,lastname,email,password){
+export async function userSignup(username, firstname, lastname, email, password, profilePicture) {
     try {
-        console.log("handling sign up now")
-    const response = await fetch(`http://192.168.205.7:8000/registerUser?username=${username}&firstname=${firstname}&lastname=${lastname}&email=${email}&password=${password}`,{
-        method:'POST',
-        headers: {
-            'Content-Type' : 'Application/json',
-        },
-        
-    })
-    
-    return await response.json()
-    }catch (error) {
+        console.log("handling sign up now");
+
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('firstname', firstname);
+        formData.append('lastname', lastname);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('profilePicture', profilePicture);
+
+        const response = await fetch('http://192.168.189.7:8000/registerUser', {
+            method: 'POST',
+            body: formData,
+        });
+
+        return await response.json();
+    } catch (error) {
         console.error(error);
-        return error
+        return error;
     }
 }
+
+export async function userLogin(username,password){
+    try {
+        const response = await fetch(`http://192.168.189.7:8000/loginUser?username=${username}&password=${password}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'Application/json',
+            },
+        }
+        
+        );
+        return await response.json()
+}
+catch(error){
+    console.log(error)
+}}
 
 export async function addProduct(carName,model,color,userId){
     try{

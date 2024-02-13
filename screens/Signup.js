@@ -14,6 +14,7 @@ class Signup extends Component {
             password: "",
             loading: false,
             res: false,
+            selectedImage:null,
         };
     }
     getPermissionAsync = async () => {
@@ -37,19 +38,26 @@ class Signup extends Component {
         this.setState({ selectedImage: result.assets[0].uri });
       }
       };
-    handleSubmit = async () => {
+      handleSubmit = async () => {
         this.setState({
             loading: true,
         });
-
-        const response = await userSignup(
+    
+        let profilePictureBase64 = null;
+        if (this.state.selectedImage) {
+            let response = await fetch(this.state.selectedImage);
+            let profilePictureBlob = await response.blob();
+            profilePictureBase64 = await this.blobToBase64(profilePictureBlob);
+        }
+            const response = await userSignup(
             this.state.username,
             this.state.firstname,
             this.state.lastname,
             this.state.email,
-            this.state.password
+            this.state.password,
+            profilePictureBase64
         );
-
+    
         if (response) {
             this.setState({
                 loading: false,
@@ -57,8 +65,20 @@ class Signup extends Component {
             });
             console.log("Sign up response:", response);
         }
+        
+        
     };
 
+    blobToBase64 = (blob) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onerror = reject;
+            reader.onload = () => {
+                resolve(reader.result);
+            };
+            reader.readAsDataURL(blob);
+        });
+    };
     render() {
         return (
             <><View style={styles.container}>
@@ -89,7 +109,22 @@ class Signup extends Component {
                     value={this.state.password}
                     onChangeText={(text) => this.setState({ password: text })}
                     secureTextEntry={true} />
-                <Pressable style={styles.button} onPress={this.handleSubmit}>
+
+                    <View style={styles.picCon}>
+                    <Pressable onPress={this.openImagePicker}>
+                    <Text style={styles.picker}>choose picture</Text>
+                </Pressable>
+                {this.state.selectedImage && (
+                        <Image source={{ uri: this.state.selectedImage }} style={{ width: 50, height: 50, marginLeft:5, borderRadius:4,marginBottom:10 }} />
+                    )}
+                </View>
+
+
+                <Pressable style={
+                ({ pressed }) => [
+                            styles.button,
+                            { backgroundColor: pressed ? 'gray' : 'white' }
+                        ]} onPress={this.handleSubmit}>
                     <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
                 {this.state.res ? (
@@ -98,17 +133,11 @@ class Signup extends Component {
                     <Text style={styles.loadingText}>Please wait...</Text>
                 ) : null}
                 <Pressable onPress={() => this.props.navigation.replace('Login')}>
-                    <Text>do you have an account?</Text>
+                    <Text style={styles.switchPage}>do you have an account?</Text>
                 </Pressable>
+                
             </View>
-            <View>
-
-                    <Button title="Open Image Picker" onPress={this.openImagePicker} />
-                    {console.log(this.state.selectedImage)}
-                    {this.state.selectedImage && (
-                        <Image source={{ uri: this.state.selectedImage }} style={{ width: 200, height: 200 }} />
-                    )}
-                </View></>
+            </>
         );
     }
 }
@@ -118,7 +147,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor:'#1f8f9f'
     },
+    picCon:{
+        flexDirection:'row',
+        justifyContent:'center'    },
     title: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -126,21 +159,23 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        width: 300,
-        borderColor: 'gray',
+        width:'70%',
+        borderColor: 'white',
+        color:'white',
         borderWidth: 1,
+        borderRadius: 10,
         marginBottom: 15,
-        paddingLeft: 10,
+        paddingLeft: 20,
     },
     button: {
-        backgroundColor: '#3498db',
-        padding: 15,
-        borderRadius: 8,
-        width: 200,
+        backgroundColor: 'white',
+        padding: 10,
         alignItems: 'center',
+        borderRadius: 10,
+        width:'30%'
     },
     buttonText: {
-        color: 'white',
+        color: 'black',
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -149,6 +184,21 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontStyle: 'italic',
     },
+    switchPage: {
+        marginTop:10,
+        color: 'white',
+        opacity: 0.5,
+        textDecorationLine:'underline'
+    },
+    picker: {
+        backgroundColor: 'white',
+        padding: 10,
+        alignItems:'flex-end',
+        borderRadius: 5,
+        width:'100%',
+        marginBottom:5
+        
+    }
 });
 
 export default Signup;

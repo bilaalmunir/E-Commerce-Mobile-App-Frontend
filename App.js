@@ -10,8 +10,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import Signup from './screens/Signup';
 import FrontPage from './screens/Frontpage';
 import MainPage from './TabNavigation/Mainpage';
-import Addcar from './screens/Addcar';
+import Addcar from './TabNavigation/Addcar';
 import Cardetails from './screens/Cardetails';
+import Tabs from './TabNavigation/Tabs';
 const Stack = createNativeStackNavigator();
 //import ImagePicker from 'react-native-image-picker';
 //login say reg mein jara hai tou push ho
@@ -25,15 +26,15 @@ class App extends Component {
    return (
     <NavigationContainer>
     <Stack.Navigator initialRouteName="Frontpage">
-      <Stack.Screen name="Frontpage" component={FrontPage} />
-      <Stack.Screen name="Login" component={Login} /> 
-      <Stack.Screen name="Signup" component={Signup} />
-     <Stack.Screen name="MainPage" component={MainPage}/>
-      <Stack.Screen name="Addcar" component={Addcar}/> 
-      <Stack.Screen name="Cardetails" component={Cardetails}/>
+      <Stack.Screen name="Frontpage" component={FrontPage} options={{ headerShown: false }} />
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/> 
+      <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }}/>
+      {/* <Stack.Screen name="MainPage" component={MainPage} options={{ headerShown: false }}/> */}
+      <Stack.Screen name="Addcar" component={Addcar} options={{ headerShown: false }}/> 
+      <Stack.Screen name="Cardetails" component={Cardetails} options={{ headerShown: false }}/>
+      <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
     </Stack.Navigator>
   </NavigationContainer>
-  
    );
  }
 }

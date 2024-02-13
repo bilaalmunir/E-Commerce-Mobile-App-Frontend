@@ -7,10 +7,21 @@ class FrontPage extends PureComponent {
         const {navigation} = this.props;
         return(
             <View style={styles.container}>
-            <Text style={styles.title}>Welcome!</Text>
-            <Pressable style={styles.button} title="Login" onPress={() => navigation.replace('Login')}><Text style={styles.buttonText}>log in</Text></Pressable>
-            <Pressable style={styles.button} title='SignUp' onPress={() => navigation.replace('Signup')}><Text style={styles.buttonText}>sign up</Text></Pressable> 
-                
+            <Text style={styles.title}>Hey!</Text>
+            <Text style={styles.discription}>Welcome to my Ecommerce Mobile App. Which is built on ReactNative and Springboot.</Text>
+            <View style={styles.buttonContainrs}>
+            <Pressable  style={
+                ({ pressed }) => [
+                            styles.button,
+                            { backgroundColor: pressed ? 'gray' : 'white' }
+                        ]} title="Login" onPress={() => navigation.replace('Login')}><Text style={styles.buttonText}>Log In</Text></Pressable>
+            <Pressable style={
+                ({ pressed }) => [
+                            styles.button,
+                            { backgroundColor: pressed ? 'gray' : 'white' }
+                        ]} title='SignUp' onPress={() => navigation.replace('Signup')}><Text style={styles.buttonText}>Sign Up</Text></Pressable> 
+            </View>
+
             </View>
 
         );
@@ -19,25 +30,41 @@ class FrontPage extends PureComponent {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: '#1f8f3f',
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center',  
+    },
+    buttonContainrs: {
+        flexDirection: 'row',
+        justifyContent:'center',
+        marginTop:30
     },
     title: {
-        fontSize: 24,
+        color:'white',
+        fontSize: 44,
         fontWeight: 'bold',
-        marginBottom: 30,
+        marginBottom: 20,
+        
     },
+    discription:{
+        color:'black',
+        textAlign:'center',
+        opacity:0.6
+        },
     button: {
-        backgroundColor: '#3498db',
+        backgroundColor: 'white',
         padding: 15,
-        borderRadius: 8,
+        borderRadius: 100,
         marginVertical: 10,
-        width: 200,
+        marginHorizontal:10,
+        width: 100,
         alignItems: 'center',
+        
+
     },
     buttonText: {
-        color: 'white',
+        color: 'black',
         fontSize: 16,
         fontWeight: 'bold',
     },

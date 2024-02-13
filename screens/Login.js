@@ -1,8 +1,9 @@
-import { View,Text,TextInput,Pressable,StyleSheet} from 'react-native';
+import { View,Text,TextInput,Pressable,StyleSheet,} from 'react-native';
 // import React, { Component } from 'react';
 import React, {Component,PureComponent} from 'react';
 import Mainpage from '../TabNavigation/Mainpage';
-import { userLogin } from '../api/putApi';
+import { userLogin } from '../api/postApi';
+import Constants from 'expo-constants';
 
 
 class Login extends Component {
@@ -21,8 +22,9 @@ class Login extends Component {
         console.log(json)
         if (json.userID) {
             this.setState({ user: json, error: false }); 
-          this.props.navigation.replace('MainPage', {user:json});
             console.log("heyhey"+ json);
+          this.props.navigation.replace('Tabs', {user:json});
+            
             
             //console.log("hehe"+ json.userID);
         } else {
@@ -36,8 +38,8 @@ class Login extends Component {
          
         return(
             <View style={styles.container}>
+            <View style={styles.upper}></View>
             <Text style={styles.heading}>Sign In</Text>
-            <Text style={styles.subheading}>Enter Credentials:</Text>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -52,13 +54,19 @@ class Login extends Component {
                     value={this.state.password}
                     onChangeText={(text) => this.setState({ password: text })}
                 />
-                <Pressable style={styles.button} onPress={() => this.handleLoginSubmit()}>
+                <View style={styles.buttonContainer}> 
+                <Pressable style={
+                ({ pressed }) => [
+                            styles.button,
+                            { backgroundColor: pressed ? 'gray' : 'white' }
+                        ]} onPress={() => this.handleLoginSubmit()}>
                     <Text style={styles.buttonText}>Sign In</Text>
-                </Pressable>
+                </Pressable></View>
+                
             </View>
             {this.state.error && <Text style={styles.errorText}>Incorrect login or password</Text>}
-            <Pressable onPress={()=> this.props.navigation.replace('Signup')}>
-                    <Text>do not have an account?</Text>
+            <Pressable onPress={()=> this.props.navigation.replace('Signup') }>
+                    <Text style={styles.switchPage}>do not have an account?</Text>
                 </Pressable>
         </View>
         
@@ -67,6 +75,8 @@ class Login extends Component {
         );
     }
 }
+// const windowWidth = Dimensions.get('window').width;
+// const upperWidth = windowWidth * 0.3;
 
 const styles = StyleSheet.create({
     container: {
@@ -74,34 +84,53 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        backgroundColor:'#1f8f9f'
+    },
+    // upper: {
+    //     position: 'absolute',
+    //     top: 0,
+    //     alignItems:'center',
+    //     backgroundColor: 'black',
+    //     height: Constants.statusBarHeight, // Adjust the height as needed
+    //     width: upperWidth,
+    // },
+    buttonContainer: {
+        flexDirection:'row',
+        alignContent:'center',
+        justifyContent:'center'
     },
     heading: {
-        fontSize: 24,
+        fontSize:28,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 25,
+        color:'white'
     },
     subheading: {
         fontSize: 16,
         marginBottom: 20,
+        color:'peru'
     },
     inputContainer: {
-        width: '100%',
+        width: '90%',
     },
     input: {
         height: 40,
-        borderColor: 'gray',
+        borderColor: 'white',
+        color:'white',
         borderWidth: 1,
+        borderRadius: 10,
         marginBottom: 15,
-        paddingLeft: 10,
+        paddingLeft: 20,
     },
     button: {
-        backgroundColor: '#3498db',
+        backgroundColor: 'white',
         padding: 10,
         alignItems: 'center',
-        borderRadius: 5,
+        borderRadius: 10,
+        width:100
     },
     buttonText: {
-        color: 'white',
+        color: 'black',
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -109,6 +138,12 @@ const styles = StyleSheet.create({
         color: 'red',
         marginTop: 10,
     },
+    switchPage: {
+        marginTop:10,
+        color: 'white',
+        opacity: 0.5,
+        textDecorationLine:'underline'
+    }
 });
 
 export default Login;
