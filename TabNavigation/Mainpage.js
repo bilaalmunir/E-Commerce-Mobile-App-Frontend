@@ -32,10 +32,7 @@ class Mainpage extends Component {
         }
     }
 
-    logOut = () => {
-        const { navigation } = this.props;
-         navigation.replace('Login') 
-    };
+    
 
     getP = async () => {
         try {
@@ -78,9 +75,7 @@ class Mainpage extends Component {
               <ScrollView style={styles.container}>
                   <View style={styles.header}>
                       <Text style={styles.username}> {user.username}</Text>
-                      <TouchableOpacity onPress={() => this.logOut()}>
-                          <Text style={styles.logOut}>Log out</Text>
-                      </TouchableOpacity>
+                      
                   </View>
                   {this.state.cars && this.state.cars.length > 0 ? (
                       <View>
@@ -106,12 +101,13 @@ class Mainpage extends Component {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
 },
     container: {
         flex: 1,
-        paddingTop:40,
-        padding:20
+        paddingTop:45,
+        padding:20,
+        backgroundColor: 'white',
     },
     header: {
         flexDirection: 'row',

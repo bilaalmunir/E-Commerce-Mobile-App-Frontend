@@ -15,7 +15,9 @@ const Tabs = ({ navigation, route }) => {
             <Tab.Screen  name="Addcar" >
             {(props) => <Addcar {...props} navigation={navigation} route={route} />} 
             </Tab.Screen>
-            <Tab.Screen component={Userprofile} name="Userprofile" />
+            <Tab.Screen name="Userprofile" >
+            {(props) => <Userprofile {...props} navigation={navigation} route={route} />} 
+            </Tab.Screen>
         </Tab.Navigator>
     );
 };

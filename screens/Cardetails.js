@@ -65,7 +65,7 @@ class Cardetails extends Component {
       <Text>Published By: {detail.publishedBy}</Text>
       <Text>Model: {detail.model}</Text>
       <Text>Color: {detail.color}</Text>  
-      
+      <Text>Price: ${detail.price}</Text>
       {detail.status ? (
         <Text style={carDetailStyles.soldText}>SOLD!</Text>
       ) : (

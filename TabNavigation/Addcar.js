@@ -73,7 +73,7 @@ class Addcar extends Component {
         const { route } = this.props;
         const { user } = route.params ;
         console.log("user:" + user.userID);
-        console.log("addpage mein user ka data:" + user.userID);
+        console.log("add page mein user ka data:" + user.userID);
         const UID = user.userID
         
         return (

@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity,StyleSheet } from 'react-native';
 
 class Userprofile extends Component {
-    render() {
 
+    render() {
+        const {navigation,route} = this.props;
+        const {user} = route.params;
+        //console.log("profileeeeeeeeeee",user)
+        logOut = () => {
+          const { navigation } = this.props;
+           navigation.replace('Login') 
+      };
         return (
             <View style={styles.container}>
-                <Text>userprofile</Text>
+                <Text>username: {user.username}</Text>
+                <Text>Account Balance: ${user.balance}</Text>
+                <Text>first name: {user.firstName}</Text>
+                <Text>last name: {user.lastName}</Text>
+                <TouchableOpacity onPress={() => this.logOut()}>
+                          <Text style={styles.logOut}>Log out</Text>
+                      </TouchableOpacity>
             </View>
         );
     }
@@ -19,6 +32,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
+    logOut: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: 'blue', // or any color you prefer
+      textAlign: 'right',
+  },
     label: {
         fontSize: 18,
         fontWeight: 'bold',
