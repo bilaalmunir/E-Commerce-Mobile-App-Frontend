@@ -32,12 +32,9 @@ class Mainpage extends Component {
         }
     }
 
-    carPage = () => {
+    logOut = () => {
         const { navigation } = this.props;
-        const { route } = this.props;
-        const { user } = route.params;
-        //console.log("add page mein jatay huvay user ka data"+user.userID)
-        !this.state.error ? navigation.navigate('Addcar', { user: user }) : null;
+         navigation.replace('Login') 
     };
 
     getP = async () => {
@@ -58,10 +55,14 @@ class Mainpage extends Component {
     }
 
     showDetails = (detail) => {
-        if (true) {
-            console.log("car id" + detail.ID);
+      const { route } = this.props;
+        const { user } = route.params ;
+      
+        if (detail.id) {
+            console.log("car id" + detail.id);
             this.props.navigation.navigate('Cardetails', { detail: detail, user: user });
         } else {
+          console.log("detail id nai ai")
             this.setState({ error: true });
         }
     };
@@ -77,14 +78,15 @@ class Mainpage extends Component {
               <ScrollView style={styles.container}>
                   <View style={styles.header}>
                       <Text style={styles.username}> {user.username}</Text>
-                      {/* <TouchableOpacity onPress={() => this.carPage()}>
-                          <Text style={styles.addCarButton}>Add Car</Text>
-                      </TouchableOpacity> */}
+                      <TouchableOpacity onPress={() => this.logOut()}>
+                          <Text style={styles.logOut}>Log out</Text>
+                      </TouchableOpacity>
                   </View>
                   {this.state.cars && this.state.cars.length > 0 ? (
                       <View>
                           {this.state.cars.map((car) => (
                               <TouchableOpacity key={car.ID} onPress={() => this.showDetails(car)}>
+                              
                                   <View style={styles.carBox}>
                                       <Text style={styles.carName}>Car Name: {car.carName}</Text>
                                   </View>
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
     },
-    addCarButton: {
+    logOut: {
         fontSize: 18,
         fontWeight: 'bold',
         color: 'blue', // or any color you prefer

@@ -13,7 +13,7 @@ export async function getProducts(){
 
 export async function getProductInfo(productId,userId){
     try{const response = await fetch(
-        `http://192.168.205.7:8000/buyCar?ID=${productId}&userID=${userId}`,
+        `http://192.168.189.7:8000/buyCar?ID=${productId}&userID=${userId}`,
         {
           method: "PUT",
           headers: {

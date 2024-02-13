@@ -31,7 +31,7 @@ class App extends Component {
       <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }}/>
       {/* <Stack.Screen name="MainPage" component={MainPage} options={{ headerShown: false }}/> */}
       <Stack.Screen name="Addcar" component={Addcar} options={{ headerShown: false }}/> 
-      <Stack.Screen name="Cardetails" component={Cardetails} options={{ headerShown: false }}/>
+      <Stack.Screen name="Cardetails" component={Cardetails} />
       <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
     </Stack.Navigator>
   </NavigationContainer>
