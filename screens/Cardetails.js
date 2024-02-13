@@ -1,9 +1,9 @@
 import { Component } from "react";
 import { View,Text, TouchableOpacity, StyleSheet } from "react-native";
-import { getProductInfo } from "../api/getApi";
+import { buyCarr} from "../api/putApi";
 import { deleteProduct } from "../api/deleteApi";
 import { setWishlistItem } from "../api/postApi";
-
+import Mainpage from "../TabNavigation/Mainpage";
 class Cardetails extends Component {
   constructor(props) {
     super(props);
@@ -16,17 +16,20 @@ class Cardetails extends Component {
     if (this.state.bought !== this.prevState.bought) {
     }
   }
+  
   render() {
     const { navigation } = this.props;
     const { route } = this.props;
     const { detail, user } = route.params;
-    console.log("detail object", JSON.stringify(detail, null, 2));
-    console.log("car id" + detail.id);
-    console.log("user id" + user.userID);
-    console.log("car published by:" + detail.publishedBy);
+    const isInWishlist = user.wishlist.product.some(product => product.id === detail.id);
+    //console.log("detail object", JSON.stringify(detail, null, 2));
+    //console.log("car id" + detail.id);
+    //console.log("user id" + JSON.stringify(user));
+    //console.log("car published by:" + detail.publishedBy);
 
     const buyCar = async () => {
-      const response = await getProductInfo(detail.id,user.userID)
+      console.log("buy car api")
+      const response = await buyCarr(detail.id,user.userID)
       const json = await response.json();
       console.log("json:" + json.ID);
       if (json.ID) {
@@ -34,24 +37,13 @@ class Cardetails extends Component {
         console.log("itna chal gya");
       }
     };
-
-    const deleteCar = async () => {
-      const response = await deleteProduct(detail.id)
-      if (response !== undefined) {
-        console.log("json delete API:" + response);
-  
-        if (response === 200) {
-          this.props.navigation.navigate("MainPage", { user: user });
-        }
-      } else {
-        console.error("Invalid response:", response);
-      }
-    };
-
     const addToWishlist = async () => {
+      console.log(user)
+      console.log("wishlist api")
+      
       response = await setWishlistItem(user.userID,detail.id)
       if(response !== undefined){
-        console.log("json addtoWishlist API")
+        console.log("json add to Wishlist API")
       }
       if(response === 200){
         console.log("added to users's wishlist!")
@@ -60,6 +52,20 @@ class Cardetails extends Component {
         console.error("error adding to wishlist: ", response)
       }
     }
+    const deleteCar = async () => {
+      const response = await deleteProduct(detail.id)
+      if (response !== undefined) {
+        console.log("json delete API:" + response);
+  
+        if (response === 500 || response === 200) {
+          this.props.navigation.replace('Mainpage', { user: user });
+        }
+      } else {
+        console.error("Invalid response:", response);
+      }
+    };
+
+    
     return (
       <View style={carDetailStyles.container}>
       <Text>Published By: {detail.publishedBy}</Text>
@@ -91,8 +97,8 @@ class Cardetails extends Component {
       {
         detail.publishedBy === user.userID ? (
           null
-        ):(this.state.listed?
-         (<Text>Added to wishslist!</Text>)
+        ):(isInWishlist?
+         (<Text>Added to wishlist!</Text>)
          :
          (<View> 
           <TouchableOpacity onPress={() => addToWishlist()}>

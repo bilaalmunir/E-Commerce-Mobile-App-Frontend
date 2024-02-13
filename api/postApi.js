@@ -60,7 +60,7 @@ export async function addProduct(carName,model,color,price,userId){
 
 export async function setWishlistItem(userId,productId){
     try{
-        const response = await fetch(`http://192.168.205.7:8000/setWishlistItem?userId=${userId}&productId=${productId}`,
+        const response = await fetch(`http://192.168.189.7:8000/setWishlistItem?userId=${userId}&productId=${productId}`,
     {
         method: 'POST',
         headers: {
@@ -70,7 +70,7 @@ export async function setWishlistItem(userId,productId){
     if (response.ok) {
         const jsonResponse = await response.json();
   
-        if (jsonResponse === "added to watchlist!") {
+        if (jsonResponse === "added to watch list!") {
           return response;
         } else {
           throw new Error("Unexpected response from the server");

@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity,StyleSheet } from 'react-native';
 
 class Userprofile extends Component {
-
+    logOut = () => {
+        const { navigation } = this.props;
+         navigation.replace('Login') 
+    };
     render() {
         const {navigation,route} = this.props;
         const {user} = route.params;
         //console.log("profileeeeeeeeeee",user)
-        logOut = () => {
-          const { navigation } = this.props;
-           navigation.replace('Login') 
-      };
+       
         return (
             <View style={styles.container}>
+            <TouchableOpacity onPress={()=> this.props.navigation.navigate('Wishlist' , {user:user})}>
+                <Text style={styles.logOut}>Wishlist</Text>
+            </TouchableOpacity>
                 <Text>username: {user.username}</Text>
                 <Text>Account Balance: ${user.balance}</Text>
                 <Text>first name: {user.firstName}</Text>

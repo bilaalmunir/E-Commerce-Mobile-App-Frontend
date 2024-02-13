@@ -1,141 +1,162 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
-import { getProducts } from '../api/getApi';
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  Dimensions, 
+  RefreshControl
+} from "react-native";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { getProducts } from "../api/getApi";
+import AllProducts from "./AllProducts";
+import UnsoldProducts from "./UnsoldProducts";
+import SoldProducts from "./SoldProducts";
 
 class Mainpage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: false,
-            cars: null,
-            isFetching: false,
-        };
-        this.prevState = { cars: null };
-    }
-
-    componentDidMount() {
-        this.getP();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.state.cars !== prevState.cars && !this.state.isFetching) {
-            console.log("if chal rha hai?")
-            this.setState({ isFetching: true }, () => {
-                setTimeout(() => {
-                    if (this.state.isFetching) {
-                        console.log("fetching true")
-                        this.setState({ isFetching: false });
-                        this.getP()
-                    }
-                }, 5000);
-            });
-        }
-    }
-
-    
-
-    getP = async () => {
-        try {
-            const json = await getProducts();
-            console.log("products:" + json.length);
-            if (json) {
-                this.setState({ cars: json, isFetching: false });
-                //console.log("if :" + this.state.cars);
-            } else {
-                console.log("data nai aya");
-                this.setState({ isFetching: false });
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            this.setState({ isFetching: false });
-        }
-    }
-
-    showDetails = (detail) => {
-      const { route } = this.props;
-        const { user } = route.params ;
-      
-        if (detail.id) {
-            console.log("car id" + detail.id);
-            this.props.navigation.navigate('Cardetails', { detail: detail, user: user });
-        } else {
-          console.log("detail id nai ai")
-            this.setState({ error: true });
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: false,
+      cars: [],
+      isFetching: false,
+      refreshing: false,
+      index: 0,
+      routes: [
+        { key: "all", title: "All Products" },
+        { key: "unsold", title: "Unsold Products" },
+        { key: "sold", title: "Sold Products" },
+      ],
     };
+    this.prevState = { cars: [] };
+  }
 
-    render() {
-        const { navigation } = this.props;
-        const { route } = this.props;
-        const { user } = route.params ;
-        console.log("user:" + user.userID);
-        //console.log("products data in state:"+ this.state.cars)
-        return (
-          <SafeAreaView style={styles.safeAreaContainer}>
-              <ScrollView style={styles.container}>
-                  <View style={styles.header}>
-                      <Text style={styles.username}> {user.username}</Text>
-                      
-                  </View>
-                  {this.state.cars && this.state.cars.length > 0 ? (
-                      <View>
-                          {this.state.cars.map((car) => (
-                              <TouchableOpacity key={car.ID} onPress={() => this.showDetails(car)}>
-                              
-                                  <View style={styles.carBox}>
-                                      <Text style={styles.carName}>Car Name: {car.carName}</Text>
-                                  </View>
-                              </TouchableOpacity>
-                          ))}
-                      </View>
-                  ) : (
-                      <Text>No cars available</Text>
-                  )}
-              </ScrollView>
-          </SafeAreaView>
-      );
+  // componentDidMount() {
+  //   this.getP();
+  // }
+  
 
-    }
+
+  renderAllProducts = () => {
+    const { navigation } = this.props;
+    const { route } = this.props;
+    const { user } = route.params;
+
+    return (
+
+      <AllProducts user={user} navigate={this.props.navigation} />
+    );
+  };
+  
+  
+
+  renderUnsoldProducts = () => {
+    const { navigation } = this.props;
+    const { route } = this.props;
+    const { user } = route.params;
+    return (
+      <UnsoldProducts user={user} navigate={this.props.navigation} />
+    );
+  };
+
+  renderSoldProducts = () => {
+    const { navigation } = this.props;
+    const { route } = this.props;
+    const { user } = route.params;
+    return(
+      <SoldProducts user={user} navigate={this.props.navigation}/>);
+  };
+
+  renderScene = SceneMap({
+    all: this.renderAllProducts,
+    unsold: this.renderUnsoldProducts,
+    sold: this.renderSoldProducts,
+  });
+  renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: "blue" }}
+      style={{ backgroundColor: "white" }}
+      renderLabel={({ route, focused, color }) => (
+        <Text style={{ color: focused ? "blue" : "black" }}>{route.title}</Text>
+      )}
+    />
+  );
+  render() {
+    const { navigation } = this.props;
+    const { route } = this.props;
+    const { user } = route.params;
+    console.log("user:" + user.userID);
+    //console.log("products data in state:"+ this.state.cars)
+    return (
+      <SafeAreaView style={styles.safeAreaContainer}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.username}> {user.username}</Text>
+          </View>
+          <TabView
+            navigationState={this.state}
+            renderScene={this.renderScene}
+            onIndexChange={(index) => this.setState({ index })}
+            initialLayout={{ width: Dimensions.get("window").width }}
+            renderTabBar={this.renderTabBar}
+            tabBarStyle={styles.tabBar}
+          />
+          
+        </View>
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: 'black',
-},
-    container: {
-        flex: 1,
-        paddingTop:45,
-        padding:20,
-        backgroundColor: 'white',
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    username: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'left',
-    },
-    logOut: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: 'blue', // or any color you prefer
-        textAlign: 'right',
-    },
-    carBox: {
-        borderWidth: 1,
-        borderColor: 'gray',
-        padding: 10,
-        borderRadius: 10,
-        marginBottom: 10,
-    },
-    carName: {
-        fontSize: 16,
-    },
+    backgroundColor: "black",
+  },
+  container: {
+    flex: 1,
+    paddingTop: 20,
+    padding: 20,
+    backgroundColor: "white",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  username: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "left",
+    paddingTop: 20,
+  },
+  logOut: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "blue", // or any color you prefer
+    textAlign: "right",
+  },
+  carBox: {
+    borderWidth: 1,
+    borderColor: "gray",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+    marginTop: 20,
+  },
+  carName: {
+    fontSize: 16,
+  },
+  tabBar: {
+    backgroundColor: "lightgrey", // Example background color
+    height: 50, // Example height
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default Mainpage;

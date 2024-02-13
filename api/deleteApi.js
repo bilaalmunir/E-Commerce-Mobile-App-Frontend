@@ -1,7 +1,7 @@
 export async function deleteProduct(productId){
     try{
         const response = await fetch(
-        `http://192.168.181.7:8000/deleteCar?carId=${productId}`,
+        `http://192.168.189.7:8000/deleteCar?carId=${productId}`,
         {
           method: "DELETE",
           headers: {
