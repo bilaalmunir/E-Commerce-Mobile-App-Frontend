@@ -80,7 +80,7 @@ this.setState({ error: true });
         return (
             <View>
               {this.state.cars && this.state.cars.length > 0 ? (
-                      <View>
+                      <ScrollView>
                           {this.state.cars.map((car) => (
                               <TouchableOpacity key={car.ID} onPress={() => this.showDetails(car)}>
                               
@@ -89,7 +89,7 @@ this.setState({ error: true });
                                   </View>
                               </TouchableOpacity>
                           ))}
-                      </View>
+                      </ScrollView>
                   ) : (
                       <Text>No cars available</Text>
                   )}

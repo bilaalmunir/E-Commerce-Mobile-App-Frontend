@@ -9,11 +9,11 @@ class Cardetails extends Component {
     super(props);
     this.state = {
       bought: false,
-      listed:false,
+      listed: false,
     };
   }
-  componentDidUpdate() {
-    if (this.state.bought !== this.prevState.bought) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.listed !== prevState.listed || this.state.bought !== prevState.bought) {
     }
   }
   
@@ -21,7 +21,7 @@ class Cardetails extends Component {
     const { navigation } = this.props;
     const { route } = this.props;
     const { detail, user } = route.params;
-    const isInWishlist = user.wishlist.product.some(product => product.id === detail.id);
+    // const isInWishlist = user.wishlist.product.some(product => product.id === detail.id);
     //console.log("detail object", JSON.stringify(detail, null, 2));
     //console.log("car id" + detail.id);
     //console.log("user id" + JSON.stringify(user));
@@ -30,24 +30,28 @@ class Cardetails extends Component {
     const buyCar = async () => {
       console.log("buy car api")
       const response = await buyCarr(detail.id,user.userID)
-      const json = await response.json();
-      console.log("json:" + json.ID);
-      if (json.ID) {
+      //const json = await response.json();
+      console.log("json:" + response.id);
+      if (response.id) {
         this.setState({ bought: true });
         console.log("itna chal gya");
+        console.log("bought state:", this.state.bought)
       }
     };
+
     const addToWishlist = async () => {
       console.log(user)
       console.log("wishlist api")
       
       response = await setWishlistItem(user.userID,detail.id)
+      console.log(response)
       if(response !== undefined){
         console.log("json add to Wishlist API")
       }
-      if(response === 200){
+      if(response.status === 200){
         console.log("added to users's wishlist!")
         this.setState({listed:true})
+        console.log("Testing the listed thing: " + this.state.listed)
       } else {
         console.error("error adding to wishlist: ", response)
       }
@@ -58,7 +62,8 @@ class Cardetails extends Component {
         console.log("json delete API:" + response);
   
         if (response === 500 || response === 200) {
-          this.props.navigation.replace('Mainpage', { user: user });
+          //this.props.navigation.replace('Mainpage', { user: user });
+          this.props.navigation.goBack();
         }
       } else {
         console.error("Invalid response:", response);
@@ -72,7 +77,7 @@ class Cardetails extends Component {
       <Text>Model: {detail.model}</Text>
       <Text>Color: {detail.color}</Text>  
       <Text>Price: ${detail.price}</Text>
-      {detail.status ? (
+      {this.state.bought ? (
         <Text style={carDetailStyles.soldText}>SOLD!</Text>
       ) : (
         <View>
@@ -97,7 +102,7 @@ class Cardetails extends Component {
       {
         detail.publishedBy === user.userID ? (
           null
-        ):(isInWishlist?
+        ):(this.state.listed?
          (<Text>Added to wishlist!</Text>)
          :
          (<View> 

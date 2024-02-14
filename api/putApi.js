@@ -8,8 +8,10 @@ export async function buyCarr(productId,userId){
           },
         }
       );
-      console.log(response.json)
-      return await response.json()
+      //console.log(response.json())
+      const resu = await response.json()
+      //console.log("resuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", resu)
+      return  resu
     }catch(error){
         return error
     }

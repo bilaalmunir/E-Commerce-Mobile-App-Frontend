@@ -67,14 +67,11 @@ export async function setWishlistItem(userId,productId){
             'content-Type' : 'Application/json',
         },
     });
-    if (response.ok) {
-        const jsonResponse = await response.json();
-  
-        if (jsonResponse === "added to watch list!") {
-          return response;
-        } else {
-          throw new Error("Unexpected response from the server");
-        }
+    const jsonResponse = await response.json();
+    console.log("Mango khaya kro : " +JSON.stringify(jsonResponse))
+    if (jsonResponse.status===200) {
+          return jsonResponse;
+        
       } else {
         throw new Error("Error adding to wishlist!");
       }
