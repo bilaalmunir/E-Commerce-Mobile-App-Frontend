@@ -12,6 +12,18 @@ class Cardetails extends Component {
       listed: false,
     };
   }
+  // componentDidMount(){
+   
+  //   //const { navigation } = this.props;
+  //   //const { route } = this.props;
+  //   const { detail } = this.props.route.params;
+  //   console.log("didmount mein", this.props.route.params.user);
+    
+  //   console.log("didmount mein id",productId)
+  //   if( )){
+  //     this.setState({listed:true})
+  //   }
+  // }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.listed !== prevState.listed || this.state.bought !== prevState.bought) {
     }
@@ -21,6 +33,11 @@ class Cardetails extends Component {
     const { navigation } = this.props;
     const { route } = this.props;
     const { detail, user } = route.params;
+    console.log("userrrrrrrrrrrrrrrrrrrrrrr",user.userID)
+    //const { productId } = detail.id;
+   // const {wishlist} = user.wishlist;
+    const {wantedProduct} = true
+    //console.log("someeeeeeeeeeeeeeeee",products)
     // const isInWishlist = user.wishlist.product.some(product => product.id === detail.id);
     //console.log("detail object", JSON.stringify(detail, null, 2));
     //console.log("car id" + detail.id);
@@ -40,21 +57,15 @@ class Cardetails extends Component {
     };
 
     const addToWishlist = async () => {
-      console.log(user)
+      //console.log(user)
       console.log("wishlist api")
-      
+      //console.log(detail.id)
       response = await setWishlistItem(user.userID,detail.id)
       console.log(response)
-      if(response !== undefined){
-        console.log("json add to Wishlist API")
-      }
-      if(response.status === 200){
-        console.log("added to users's wishlist!")
+      if (response.id){
         this.setState({listed:true})
-        console.log("Testing the listed thing: " + this.state.listed)
-      } else {
-        console.error("error adding to wishlist: ", response)
       }
+
     }
     const deleteCar = async () => {
       const response = await deleteProduct(detail.id)
@@ -77,7 +88,8 @@ class Cardetails extends Component {
       <Text>Model: {detail.model}</Text>
       <Text>Color: {detail.color}</Text>  
       <Text>Price: ${detail.price}</Text>
-      {this.state.bought ? (
+      
+      {detail.status ? (
         <Text style={carDetailStyles.soldText}>SOLD!</Text>
       ) : (
         <View>
@@ -102,7 +114,7 @@ class Cardetails extends Component {
       {
         detail.publishedBy === user.userID ? (
           null
-        ):(this.state.listed?
+        ):( wantedProduct ?
          (<Text>Added to wishlist!</Text>)
          :
          (<View> 

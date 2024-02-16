@@ -20,10 +20,14 @@ export async function getUnsoldProducts(){
                 'Content-Type': 'Application/json',
             },
         });
-        return await res.json()
+        
+        const response = await res.json()
+        //console.log("Unsoldddddddddddddddddd",response)
+        return response
 }catch(error){
     return error
-}}
+}
+}
 
 export async function getSoldProducts(){
     try {
@@ -33,7 +37,10 @@ export async function getSoldProducts(){
                 'Content-Type': 'Application/json',
             },
         });
-        return await res.json()
+        
+        const response = await res.json()
+        //console.log("soldddddddddddddddddd",response)
+        return response
 }catch(error){
     return error
 }}

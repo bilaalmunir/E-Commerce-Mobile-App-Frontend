@@ -30,13 +30,13 @@ class AllProducts extends Component {
       }
       componentDidUpdate(prevProps, prevState) {
         if (this.state.cars !== prevState.cars && !this.state.isFetching) {
-          console.log("if chal rha hai?");
+          //console.log("if chal rha hai?");
           this.setState({ isFetching: true }, () => {
             setTimeout(() => {
-              console.log("fetching true");
+           //   console.log("fetching true");
               this.setState({ isFetching: false });
               this.getP();
-            }, 5000);
+            }, 1000);
           });
         }
       }
@@ -48,7 +48,7 @@ class AllProducts extends Component {
     getP = async () => {
       try {
           const json = await getProducts();
-          console.log("products:", JSON.stringify(json));
+         // console.log("products:", JSON.stringify(json));
           if (json) {
               this.setState({ cars: json, isFetching: false, refreshing: false });
           } else {

@@ -14,3 +14,6 @@ export async function deleteProduct(productId){
         return error
     }
 }
+
+
+

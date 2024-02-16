@@ -16,3 +16,20 @@ export async function buyCarr(productId,userId){
         return error
     }
 }
+
+export async function removeFromWishlist(userId,productId){
+  try{
+    const response = await fetch(
+    `http://192.168.189.7:8000/removeWishlistItem?userId=${userId}&productId=${productId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    }
+  );
+  return response.status;
+}catch(error){
+    return error
+}
+}

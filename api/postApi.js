@@ -68,8 +68,8 @@ export async function setWishlistItem(userId,productId){
         },
     });
     const jsonResponse = await response.json();
-    console.log("Mango khaya kro : " +JSON.stringify(jsonResponse))
-    if (jsonResponse.status===200) {
+    console.log("set wishlist response : " +JSON.stringify(jsonResponse))
+    if (jsonResponse.id) {
           return jsonResponse;
         
       } else {

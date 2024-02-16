@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
         
     },
     discription:{
-        color:'black',
+        color:'white',
         textAlign:'center',
-        opacity:0.6
+        opacity:0.7
         },
     button: {
         backgroundColor: 'white',
