@@ -79,3 +79,26 @@ export async function setWishlistItem(userId,productId){
       return error;
     }
   }
+
+  export async function addComment(productId,userId,comment){
+    try{
+        const response = await fetch(`http://192.168.189.7:8000/postComment?productId=${productId}&userId=${userId}&com=${comment}`,
+    {
+        method: 'POST',
+        headers: {
+            'content-Type' : 'Application/json',
+        },
+    });
+    const jsonResponse = await response.json();
+    console.log("set comment response : " +JSON.stringify(jsonResponse))
+    if (jsonResponse.id) {
+          return jsonResponse;
+        
+      } else {
+        throw new Error("Error adding comment!");
+      }
+    } catch (error) {
+      return error;
+    }
+
+  }
