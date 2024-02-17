@@ -13,12 +13,12 @@ class FrontPage extends PureComponent {
             <Pressable  style={
                 ({ pressed }) => [
                             styles.button,
-                            { backgroundColor: pressed ? 'gray' : 'white' }
+                            { backgroundColor: pressed ? 'gray' : 'black' }
                         ]} title="Login" onPress={() => navigation.replace('Login')}><Text style={styles.buttonText}>Log In</Text></Pressable>
             <Pressable style={
                 ({ pressed }) => [
                             styles.button,
-                            { backgroundColor: pressed ? 'gray' : 'white' }
+                            { backgroundColor: pressed ? 'gray' : 'black' }
                         ]} title='SignUp' onPress={() => navigation.replace('Signup')}><Text style={styles.buttonText}>Sign Up</Text></Pressable> 
             </View>
 
@@ -30,7 +30,7 @@ class FrontPage extends PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#1f8f3f',
+        backgroundColor: 'white',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',  
@@ -41,19 +41,19 @@ const styles = StyleSheet.create({
         marginTop:30
     },
     title: {
-        color:'white',
+        color:'black',
         fontSize: 44,
         fontWeight: 'bold',
         marginBottom: 20,
         
     },
     discription:{
-        color:'white',
+        color:'black',
         textAlign:'center',
         opacity:0.7
         },
     button: {
-        backgroundColor: 'white',
+        backgroundColor: 'black',
         padding: 15,
         borderRadius: 100,
         marginVertical: 10,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 
     },
     buttonText: {
-        color: 'black',
+        color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
     },

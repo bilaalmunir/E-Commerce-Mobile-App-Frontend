@@ -10,6 +10,7 @@ import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import React, { Component } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, Dimensions, StatusBar, Keyboard, Animated, Image } from 'react-native';
 import Constants from 'expo-constants';
+//import piclogin from '../Images/piclogin';
 //import { SafeAreaView } from 'react-native-safe-area-context';
 //import { RFPercentage } from 'react-native-responsive-fontsize';
 
@@ -71,21 +72,21 @@ class Login extends Component {
         <Animated.View style={[styles.blur, { opacity: blurOpacity }]} />
         <View style={styles.upperPortion}>
         <Image
-        source={require('../Images/icons8-car.gif')} 
-        style={styles.gif}
+        source={require('../Images/piclogin.jpg')} 
+        style={styles.heading}
       />
-          <Text style={styles.heading}>Sign In.</Text>
+          {/* <Text style={styles.heading}>Sign In.</Text> */}
         </View>
         <View style={styles.lowerPortion}>
           <View style={styles.inputContainer}>
-          <FontAwesome name="user-o" size={RFPercentage(2.5)} color="blue" />
+          <FontAwesome name="user-o" size={RFPercentage(2.5)} padding={RFPercentage(1)} color="blue" paddingLeft={RFPercentage(15)} />
             <TextInput
               style={styles.input}
               placeholder="Username"
               value={this.state.username}
               onChangeText={(text) => this.setState({ username: text })}
             />
-            <AntDesign name="lock" size={RFPercentage(2.5)} color="red" style={styles.icon} />
+            <AntDesign name="lock" size={RFPercentage(2.7)} padding={RFPercentage(1)} color="red" paddingLeft={RFPercentage(15)} />
             <TextInput
               style={styles.input}
               placeholder="Password"
@@ -102,13 +103,14 @@ class Login extends Component {
               ]}
               onPress={() => this.handleLoginSubmit()}
             >
-               <AntDesign name="login" size={28} color="blue" />
+               <AntDesign name="login" size={RFPercentage(3.2)} color="blue" />
             </Pressable>
-          </View>
-          {error && <Text style={styles.errorText}>Incorrect login or password</Text>}
+            {error && <Text style={styles.errorText}>Incorrect login or password</Text>}
           <Pressable onPress={() => this.props.navigation.replace('Signup')}>
             <Text style={styles.switchPage}>Do not have an account?</Text>
           </Pressable>
+          </View>
+          
         </View>
       </SafeAreaView>
     );
@@ -122,40 +124,43 @@ const styles = StyleSheet.create({
         //flexDirection: 'column',
         //padding: 20,
         height: Dimensions.get('window').height,
-        //backgroundColor:'#1B212B'
+        backgroundColor:'white'
     },
-    blur: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0, 0, 0, 1)',
-      },
+    // blur: {
+    //     ...StyleSheet.absoluteFillObject,
+    //     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    //     borderColor:'white'
+    //   },
     upperPortion: {
-        flex: 0.5,
+        flex: 0.6,
            height: Constants.statusBarHeight,
         width: Dimensions.get('window').width,
        // backgroundColor: '#D0D0D0',
         borderBottomLeftRadius:RFPercentage(5),
         borderBottomRightRadius:RFPercentage(5),
+        justifyContent:'center',
+        alignContent:'center',
+        alignItems:'center'
         //borderRadius:RFPercentage(10),
         //borderColor:'black'
         
     },
     lowerPortion: {
-        flex: 0.5,
+        flex: 0.4,
 //backgroundColor: '#1B212B',
         alignItems:'center',
-        justifyContent:'flex-end',
+        justifyContent:'center',
         width: Dimensions.get('screen').width,
         height: Dimensions.get('screen').height,
+
        
         
     },
     
     heading: {
-        fontSize:RFPercentage(15),
-        fontWeight: 'bold',
-        paddingTop: RFPercentage(12),
-        //marginBottom: 25,
-        //color:'#1B212B'
+        width:RFPercentage(50),
+        height:RFPercentage(30),
+      
     },
     subheading: {
         fontSize: 16,
@@ -163,50 +168,41 @@ const styles = StyleSheet.create({
         color:'peru'
     },
     inputContainer: {
-
-        width: '70%',
-        //backgroundColor:'black',
+        width: RFPercentage(40),
+        height:RFPercentage(40),
         alignContent:'center',
-        justifyContent:'center',
-        //alignItems:'center'
-        //marginBottom:'0%'
-        //paddingBottom:'2%'
+        justifyContent:'flex-end',
+        borderColor:'gray',
+        borderRadius:RFPercentage(2),
+        padding:RFPercentage(2)
+
+    },
+    icon: {
+      
     },
     input: {
         height: RFPercentage(6),
-        //backgroundColor:'#80839C',
-        borderColor: 'white',
-        color:'white',
-        borderWidth: RFPercentage(0.1),
+        borderColor: 'gray',
+        color:'black',
+        backgroundColor:'white',
+        borderWidth: RFPercentage(0.2),
         borderRadius: RFPercentage(2),
-        marginBottom: "2%",
         paddingLeft: RFPercentage(2),
     },
     buttonContainer: {
         width:RFPercentage(50),
-        // height:RFPercentage(20),
-        //backgroundColor:'black',
+         height:RFPercentage(50),
         alignContent:'center',
         justifyContent:'center',
         alignItems:'center',
-        //marginTop:0
-       // backgroundColor:'black'
     },
     button: {
-        //backgroundColor: '#80839C',(pressable mein color hai)
-        //color:'blue',
-        padding: 10,
         alignItems: 'center',
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor:'white',
-        width:'28%',
-        marginBottom:'40%'
+        marginBottom:RFPercentage(2)
 
     },
     buttonText: {
         color: '#1B212E',
-        //backgroundColor:'black',
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -215,8 +211,8 @@ const styles = StyleSheet.create({
         marginTop: '2%',
     },
     switchPage: {
-        marginBottom:RFPercentage(2),
-        color: 'white',
+        marginBottom:RFPercentage(40),
+        color: 'black',
         textDecorationLine:'underline'
     }
 });
