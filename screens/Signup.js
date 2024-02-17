@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Pressable,Image, StyleSheet, Button } from 'react-native';
+import { View, Text, TextInput, Pressable,Image, StyleSheet, Button, Alert } from 'react-native';
 
 import { userSignup } from '../api/postApi';
 import * as ImagePicker from 'expo-image-picker';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 class Signup extends Component {
     constructor(props) {
         super(props);
@@ -49,22 +50,27 @@ class Signup extends Component {
             let profilePictureBlob = await response.blob();
             profilePictureBase64 = await this.blobToBase64(profilePictureBlob);
         }
+        if(this.state.username !== "" || this.state.firstname !== "" ||this.state.username !== "" ||this.state.lastname !== "" ||this.state.email !== "" ||this.state.password !== "" ){
             const response = await userSignup(
-            this.state.username,
-            this.state.firstname,
-            this.state.lastname,
-            this.state.email,
-            this.state.password,
-            profilePictureBase64
-        );
-    
-        if (response) {
-            this.setState({
-                loading: false,
-                res: true,
-            });
-            console.log("Sign up response:", response);
+                this.state.username,
+                this.state.firstname,
+                this.state.lastname,
+                this.state.email,
+                this.state.password,
+                profilePictureBase64
+            );
+        
+            if (response) {
+                this.setState({
+                    loading: false,
+                    res: true,
+                });
+                console.log("Sign up response:", response);
+            }
+        }else{
+            Alert.alert("Please fill in all fields.");
         }
+            
         
         
     };
@@ -112,7 +118,7 @@ class Signup extends Component {
 
                     <View style={styles.picCon}>
                     <Pressable onPress={this.openImagePicker}>
-                    <Text style={styles.picker}>choose picture</Text>
+                    <Text style={styles.picker}>Profile Picture</Text>
                 </Pressable>
                 {this.state.selectedImage && (
                         <Image source={{ uri: this.state.selectedImage }} style={{ width: 50, height: 50, marginLeft:5, borderRadius:4,marginBottom:10 }} />
@@ -133,7 +139,7 @@ class Signup extends Component {
                     <Text style={styles.loadingText}>Please wait...</Text>
                 ) : null}
                 <Pressable onPress={() => this.props.navigation.replace('Login')}>
-                    <Text style={styles.switchPage}>do you have an account?</Text>
+                    <Text style={styles.switchPage}>Go to Login?</Text>
                 </Pressable>
                 
             </View>
@@ -147,28 +153,28 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#1f8f9f'
+        backgroundColor:'wite'
     },
     picCon:{
         flexDirection:'row',
         justifyContent:'center'    },
     title: {
-        fontSize: 18,
+        fontSize: RFPercentage(3),
         fontWeight: 'bold',
-        marginBottom: 20,
+        marginBottom: RFPercentage(2),
     },
     input: {
-        height: 40,
-        width:'70%',
-        borderColor: 'white',
-        color:'white',
-        borderWidth: 1,
-        borderRadius: 10,
-        marginBottom: 15,
-        paddingLeft: 20,
+        height: RFPercentage(5),
+        width:RFPercentage(35),
+        borderColor: '#36454F',
+        color:'#36454F',
+        borderWidth: RFPercentage(0.1),
+        borderRadius: RFPercentage(1),
+        marginBottom: RFPercentage(1),
+        paddingLeft: RFPercentage(2),
     },
     button: {
-        backgroundColor: 'white',
+        backgroundColor: 'black',
         padding: 10,
         alignItems: 'center',
         borderRadius: 10,
@@ -176,7 +182,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'black',
-        fontSize: 16,
+        fontSize: RFPercentage(2),
         fontWeight: 'bold',
     },
     loadingText: {
@@ -185,18 +191,19 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
     },
     switchPage: {
-        marginTop:10,
-        color: 'white',
-        opacity: 0.5,
+        marginTop:RFPercentage(2),
+        color: 'black',
+        opacity: 0.8,
         textDecorationLine:'underline'
     },
     picker: {
         backgroundColor: 'white',
-        padding: 10,
+        color:'black',
+        padding: RFPercentage(1.4),
         alignItems:'flex-end',
         borderRadius: 5,
-        width:'100%',
-        marginBottom:5
+        width:RFPercentage(14),
+        marginBottom:RFPercentage(1)
         
     }
 });

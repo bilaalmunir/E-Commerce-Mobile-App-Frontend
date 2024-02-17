@@ -79,14 +79,14 @@ class Login extends Component {
         </View>
         <View style={styles.lowerPortion}>
           <View style={styles.inputContainer}>
-          <FontAwesome name="user-o" size={RFPercentage(2.5)} padding={RFPercentage(1)} color="blue" paddingLeft={RFPercentage(15)} />
+          <FontAwesome name="user-o" size={RFPercentage(2.5)} backgroundColor='white' padding={RFPercentage(1)} color="blue" paddingLeft={RFPercentage(16.5)} />
             <TextInput
               style={styles.input}
               placeholder="Username"
               value={this.state.username}
               onChangeText={(text) => this.setState({ username: text })}
             />
-            <AntDesign name="lock" size={RFPercentage(2.7)} padding={RFPercentage(1)} color="red" paddingLeft={RFPercentage(15)} />
+            <AntDesign name="lock" size={RFPercentage(2.7)} padding={RFPercentage(1)} color="red" paddingLeft={RFPercentage(16.5)} />
             <TextInput
               style={styles.input}
               placeholder="Password"
@@ -107,7 +107,7 @@ class Login extends Component {
             </Pressable>
             {error && <Text style={styles.errorText}>Incorrect login or password</Text>}
           <Pressable onPress={() => this.props.navigation.replace('Signup')}>
-            <Text style={styles.switchPage}>Do not have an account?</Text>
+            <Text style={styles.switchPage}>Need to Sign up?</Text>
           </Pressable>
           </View>
           
