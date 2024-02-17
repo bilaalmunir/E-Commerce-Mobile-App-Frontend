@@ -14,6 +14,7 @@ import Addcar from './TabNavigation/Addcar';
 import Cardetails from './screens/Cardetails';
 import Tabs from './TabNavigation/Tabs';
 import Wishlist from './screens/Wishlist';
+import Ownedcars from './screens/OwnedCars';
 const Stack = createNativeStackNavigator();
 //import ImagePicker from 'react-native-image-picker';
 //login say reg mein jara hai tou push ho
@@ -35,6 +36,7 @@ class App extends Component {
       <Stack.Screen name="Cardetails" component={Cardetails} />
       <Stack.Screen name='Wishlist' component={Wishlist}/>
       <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+      <Stack.Screen name="Ownedcars" component={Ownedcars}/>
     </Stack.Navigator>
   </NavigationContainer>
    );

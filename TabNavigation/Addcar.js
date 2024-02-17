@@ -98,6 +98,10 @@ class Addcar extends Component {
               <TextInput
               style={carFormStyles.input}
               placeholder="Price"
+              keyboardType="number-pad"
+              keyboardAppearance="default"
+             // keyboardAppearance="light"
+              
               value={this.state.price}
               onChangeText={(text) => this.setState({ price: text })} />
               

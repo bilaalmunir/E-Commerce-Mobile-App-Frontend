@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity,StyleSheet } from 'react-native';
-
 class Userprofile extends Component {
     logOut = () => {
         const { navigation } = this.props;
@@ -22,6 +21,9 @@ class Userprofile extends Component {
                 <Text>last name: {user.lastName}</Text>
                 <TouchableOpacity onPress={() => this.logOut()}>
                           <Text style={styles.logOut}>Log out</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={()=> this.props.navigation.navigate('Ownedcars', {user: user.ownedCars})}>
+                        <Text style={{color:'black', fontSize:20, borderWidth:2, borderRadius:5,marginTop:5, backgroundColor:'white'}}>Owned Cars</Text>
                       </TouchableOpacity>
             </View>
         );

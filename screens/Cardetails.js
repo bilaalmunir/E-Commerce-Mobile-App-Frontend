@@ -64,7 +64,7 @@ class Cardetails extends Component {
     <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: "blue" }}
-      style={{ backgroundColor: "white" }}
+      style={{ backgroundColor: "khaki", borderRadius:10 }}
       renderLabel={({ route, focused, color }) => (
         <Text style={{ color: focused ? "blue" : "black" }}>{route.title}</Text>
       )}
