@@ -58,7 +58,7 @@ class Cardetails extends Component {
     const { route } = this.props;
     const { user , detail} = route.params;
     return(
-      <Comments user={user} detail={detail} navigate={this.props.navigation}/>);
+      <Comments detail={detail} navigate={this.props.navigation}/>);
   };
 
   renderScene = SceneMap({

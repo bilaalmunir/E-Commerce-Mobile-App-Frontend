@@ -61,7 +61,7 @@ class Addcar extends Component {
       quality: 1,
     });
 
-    console.log(result);
+   // console.log(result);
 
     if (!result.canceled) {
       this.setState({ selectedImage: result.assets[0].uri });
@@ -72,8 +72,8 @@ class Addcar extends Component {
         const { navigation } = this.props;
         const { route } = this.props;
         const { user } = route.params ;
-        console.log("user:" + user.userID);
-        console.log("add page mein user ka data:" + user.userID);
+        //console.log("user:" + user.userID);
+       // console.log("add page mein user ka data:" + user.userID);
         const UID = user.userID
         
         return (
@@ -113,7 +113,7 @@ class Addcar extends Component {
           <View>
           
         <Button title="Open Image Picker" onPress={this.openImagePicker} />
-        {console.log(this.state.selectedImage)}
+        
         {this.state.selectedImage && (
           <Image source={{ uri: this.state.selectedImage }} style={{ width: 200, height: 200 }} />
         )}

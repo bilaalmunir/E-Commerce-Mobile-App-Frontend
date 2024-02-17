@@ -22,6 +22,7 @@ class Comment extends Component {
             this.setState({
                 done:true
             })
+            this.props.navigate.goBack();
         }
         
         else{

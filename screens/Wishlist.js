@@ -22,13 +22,20 @@ class Wishlist extends Component {
     }
     getItems = () => {
         const { wishlist } = this.props.route.params.user;
-        const pro=[]
-        wishlist.product.forEach((product, index) => {
+    if (wishlist && wishlist.product) {
+        const pro = wishlist.product.map((product, index) => {
             console.log(`Product ${index + 1}:`, product);
-            pro.push(product);
+            return product;
         });
         this.setState({
-            products:pro})
+            products: pro
+        });
+    } else {
+        console.log("Wishlist or product is null or undefined");
+        this.setState({
+            products: []
+        });
+    }
     }
     RemoveFromWishlist = async (userId, productId) => {
         console.log("wishlist removee ", userId , productId);
@@ -62,20 +69,25 @@ render (){
     
     const{navigate,route} = this.props;
     const{user} = route.params
-    return(
+    return (
         <View>
-        <Text>Wishlist</Text>
-        
-                {this.state.products.map((product, index) => (
-                    <View><TouchableOpacity key={product.ID} onPress={() => this.showDetails(product)} >
-                        <Text>{product.carName}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity key={index} onPress={() => this.RemoveFromWishlist(user.userID,product.id)}>
-                        <Text>Remove</Text>
-                    </TouchableOpacity></View>
-                ))}
-        
-            </View>
+            <Text>Wishlist</Text>
+    
+            {this.state.products.length > 0 || this.state.products !== "null"? (
+                <View>
+                    {this.state.products.map((product, index) => (
+                        <View key={index}>
+                            <TouchableOpacity onPress={() => this.showDetails(product)} >
+                                <Text>{product.carName}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.RemoveFromWishlist(user.userID, product.id)}>
+                                <Text>Remove</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ))}
+                </View>
+            ) : (<Text>nothing!</Text>)}
+        </View>
     );
 }
 }

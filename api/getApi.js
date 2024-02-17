@@ -44,3 +44,18 @@ export async function getSoldProducts(){
 }catch(error){
     return error
 }}
+
+export async function getCommentsForPost(productId){
+    try {
+        const res = await fetch(`http://192.168.189.7:8000/getComments?porductId=${productId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'Application/json',
+            },
+        });
+        const response = await res.json()
+        console.log("get commmentsssssssssssssssss: ",response)
+        return response
+}catch(error){
+    return error
+}}
