@@ -1,16 +1,30 @@
 import { Component } from "react";
-import { View,Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View,Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { buyCarr} from "../api/putApi";
 import { deleteProduct } from "../api/deleteApi";
 import { setWishlistItem } from "../api/postApi";
 import Mainpage from "../TabNavigation/Mainpage";
+import Comments from "./Comments";
+import Comment from "./Comment";
+import { SafeAreaView } from "react-native-safe-area-context";
+//import { styles } from "./styles";
 class Cardetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bought: false,
       listed: false,
+      index: 0,
+      routes: [
+        { key: "comment", title: "Comment" },
+        { key: "comments", title: "Comments" },
+      ],
+      
     };
+  //   this.renderCommentScreen = this.renderCommentScreen.bind(this);
+  // this.renderComments = this.renderComments.bind(this);
+    //this.renderScene = this.renderScene.bind(this);
   }
   // componentDidMount(){
    
@@ -24,6 +38,40 @@ class Cardetails extends Component {
   //     this.setState({listed:true})
   //   }
   // }
+  renderCommentScreen = () => {
+    const { navigation } = this.props;
+    const { route } = this.props;
+    const { user } = route.params;
+    return (
+      <Comment user={user} navigate={this.props.navigation} />
+    );
+  };
+
+  renderComments = () => {
+    const { navigation } = this.props;
+    const { route } = this.props;
+    const { user } = route.params;
+    return(
+      <Comments user={user} navigate={this.props.navigation}/>);
+  };
+
+  renderScene = SceneMap({
+    comment: this.renderCommentScreen,
+    comments: this.renderComments
+  });
+  renderTabBar = (props) => (
+    
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: "blue" }}
+      style={{ backgroundColor: "white" }}
+      renderLabel={({ route, focused, color }) => (
+        <Text style={{ color: focused ? "blue" : "black" }}>{route.title}</Text>
+      )}
+    />
+    
+  );
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.listed !== prevState.listed || this.state.bought !== prevState.bought) {
     }
@@ -80,51 +128,61 @@ class Cardetails extends Component {
         console.error("Invalid response:", response);
       }
     };
-
+   
     
     return (
-      <View style={carDetailStyles.container}>
-      <Text>Published By: {detail.publishedBy}</Text>
-      <Text>Model: {detail.model}</Text>
-      <Text>Color: {detail.color}</Text>  
-      <Text>Price: ${detail.price}</Text>
-      
-      {detail.status ? (
-        <Text style={carDetailStyles.soldText}>SOLD!</Text>
-      ) : (
-        <View>
-          <Text>STILL ON MARKET!</Text> 
-          {detail.publishedBy !== user.userID ? (
-            <View>
-              <TouchableOpacity onPress={() => buyCar()}>
-                <Text style={carDetailStyles.buyNowText}>BUY NOW!</Text> 
-              </TouchableOpacity>
-            </View>
-          ) : null}
-        </View>
-      )}
+      <><View style={carDetailStyles.container}>
+        <Text>Published By: {detail.publishedBy}</Text>
+        <Text>Model: {detail.model}</Text>
+        <Text>Color: {detail.color}</Text>
+        <Text>Price: ${detail.price}</Text>
 
-      {detail.publishedBy === user.userID ? (
-        <View>
-          <TouchableOpacity onPress={() => deleteCar()}>
-            <Text style={carDetailStyles.removeCarText}>REMOVE CAR NOW!</Text>
-          </TouchableOpacity>
-        </View>
-      ) : null}
-      {
-        detail.publishedBy === user.userID ? (
+        {detail.status ? (
+          <Text style={carDetailStyles.soldText}>SOLD!</Text>
+        ) : (
+          <View>
+            <Text>STILL ON MARKET!</Text>
+            {detail.publishedBy !== user.userID ? (
+              <View>
+                <TouchableOpacity onPress={() => buyCar()}>
+                  <Text style={carDetailStyles.buyNowText}>BUY NOW!</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
+          </View>
+        )}
+
+        {detail.publishedBy === user.userID ? (
+          <View>
+            <TouchableOpacity onPress={() => deleteCar()}>
+              <Text style={carDetailStyles.removeCarText}>REMOVE CAR NOW!</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+        {detail.publishedBy === user.userID ? (
           null
-        ):( wantedProduct ?
-         (<Text>Added to wishlist!</Text>)
-         :
-         (<View> 
-          <TouchableOpacity onPress={() => addToWishlist()}>
-            <Text> Add to wishlist!</Text>
-          </TouchableOpacity>
+        ) : (wantedProduct ?
+          (<Text>Added to wishlist!</Text>)
+          :
+          (<View>
+            <TouchableOpacity onPress={() => addToWishlist()}>
+              <Text> Add to wishlist!</Text>
+            </TouchableOpacity>
           </View>)
-        )
-      }
-    </View>
+        )}
+            
+      </View>
+      <SafeAreaView style={carDetailStyles.container2}>
+          <TabView
+          
+            navigationState={this.state}
+            renderScene={this.renderScene}
+            onIndexChange={(index) => this.setState({ index })}
+            initialLayout={{ width: Dimensions.get("window").width }}
+            renderTabBar={this.renderTabBar}
+            tabBarStyle={carDetailStyles.tabBar} />
+        </SafeAreaView>
+      </>
     
     );
   }
@@ -138,14 +196,30 @@ const carDetailStyles = StyleSheet.create({
     marginBottom: 16,
   },
   soldText: {
+    //borderWidth:1,
+    //alignItems:'center',
     color: 'red',
     fontWeight: 'bold',
   },
   buyNowText: {
+    borderWidth:3,
     color: 'green',
   },
   removeCarText: {
     color: 'red',
+  },
+  tabBar: {
+    backgroundColor: "lightgrey", // Example background color
+    height: 50,
+    // width:300, // Example height
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  container2: {
+    flex: 1,
+    paddingTop: 20,
+    padding: 20,
+    backgroundColor: "white",
   },
 });
 
