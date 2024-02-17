@@ -38,6 +38,12 @@ class Cardetails extends Component {
   //     this.setState({listed:true})
   //   }
   // }
+
+  componentDidMount(){
+    const mango = this.props.route.params.detail.status;
+    console.log("componentDidMount"+ mango)
+    this.setState({bought : mango})
+  }
   renderCommentScreen = () => {
     const { navigation } = this.props;
     const { route } = this.props;
@@ -137,7 +143,7 @@ class Cardetails extends Component {
         <Text>Color: {detail.color}</Text>
         <Text>Price: ${detail.price}</Text>
 
-        {detail.status ? (
+        {this.state.bought ? (
           <Text style={carDetailStyles.soldText}>SOLD!</Text>
         ) : (
           <View>
@@ -161,7 +167,7 @@ class Cardetails extends Component {
         ) : null}
         {detail.publishedBy === user.userID ? (
           null
-        ) : (wantedProduct ?
+        ) : (this.state.listed ?
           (<Text>Added to wishlist!</Text>)
           :
           (<View>

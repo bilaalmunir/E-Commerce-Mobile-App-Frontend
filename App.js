@@ -14,7 +14,7 @@ import Addcar from './TabNavigation/Addcar';
 import Cardetails from './screens/Cardetails';
 import Tabs from './TabNavigation/Tabs';
 import Wishlist from './screens/Wishlist';
-import Ownedcars from './screens/OwnedCars';
+import Ownedcars from './screens/Ownedcars';
 const Stack = createNativeStackNavigator();
 //import ImagePicker from 'react-native-image-picker';
 //login say reg mein jara hai tou push ho
