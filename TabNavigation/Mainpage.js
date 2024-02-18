@@ -81,7 +81,7 @@ class Mainpage extends Component {
       {...props}
       indicatorStyle={{ backgroundColor: "khaki", width:RFPercentage(14),borderRadius:RFPercentage(5), height:RFPercentage(5.6),  }}
       style={{ marginTop: RFPercentage(1),
-        marginLeft:RFPercentage(2.5),
+        marginLeft:RFPercentage(1.9),
         backgroundColor: "white", 
         width:RFPercentage(41),
     borderRadius: RFPercentage(4),
