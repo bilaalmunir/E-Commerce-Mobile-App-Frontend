@@ -7,6 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
   Dimensions, 
+  Image,
   RefreshControl
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
@@ -14,6 +15,7 @@ import { getProducts } from "../api/getApi";
 import AllProducts from "./AllProducts";
 import UnsoldProducts from "./UnsoldProducts";
 import SoldProducts from "./SoldProducts";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 class Mainpage extends Component {
   constructor(props) {
@@ -25,9 +27,9 @@ class Mainpage extends Component {
       refreshing: false,
       index: 0,
       routes: [
-        { key: "all", title: "All Products" },
-        { key: "unsold", title: "Unsold Products" },
-        { key: "sold", title: "Sold Products" },
+        { key: "all", title: "All"  },
+        { key: "unsold", title: "Unsold" },
+        { key: "sold", title: "Sold" },
       ],
     };
     this.prevState = { cars: [] };
@@ -77,10 +79,16 @@ class Mainpage extends Component {
   renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={{ backgroundColor: "blue" }}
-      style={{ backgroundColor: "white" }}
+      indicatorStyle={{ backgroundColor: "khaki", width:RFPercentage(14),borderRadius:RFPercentage(5), height:RFPercentage(5.6),  }}
+      style={{ marginTop: RFPercentage(1),
+        marginLeft:RFPercentage(2.5),
+        backgroundColor: "white", 
+        width:RFPercentage(41),
+    borderRadius: RFPercentage(4),
+
+    }}
       renderLabel={({ route, focused, color }) => (
-        <Text style={{ color: focused ? "blue" : "black" }}>{route.title}</Text>
+        <Text style={{ color: focused ? "Black" : "#004242" , fontWeight: "bold" }}>{route.title}</Text>
       )}
     />
   );
@@ -94,7 +102,11 @@ class Mainpage extends Component {
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.username}> {user.username}</Text>
+          <Image
+        source={require('../Images/profile.jpg')} 
+        style={styles.profile}
+      />
+            <Text style={styles.username}>Welcome back {user.username}!</Text>
           </View>
           <TabView
             navigationState={this.state}
@@ -114,13 +126,20 @@ class Mainpage extends Component {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#020403",
+  },
+  profile:{
+    width:RFPercentage(6),
+    height:RFPercentage(6),
+    borderRadius:RFPercentage(6),
+    borderWidth:RFPercentage(0.5),
+    borderColor:'khaki'
   },
   container: {
     flex: 1,
     paddingTop: 20,
     padding: 20,
-    backgroundColor: "white",
+    backgroundColor: "#020403",
   },
   header: {
     flexDirection: "row",
@@ -129,33 +148,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   username: {
-    fontSize: 18,
+    fontSize: RFPercentage(2),
     fontWeight: "bold",
     textAlign: "left",
-    paddingTop: 20,
-  },
-  logOut: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "blue", // or any color you prefer
-    textAlign: "right",
-  },
-  carBox: {
-    borderWidth: 1,
-    borderColor: "gray",
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 10,
-    marginTop: 20,
-  },
-  carName: {
-    fontSize: 16,
+    color:"khaki"
+    //paddingTop: RFPercentage(1),
   },
   tabBar: {
-    backgroundColor: "lightgrey", // Example background color
-    height: 50, // Example height
+    //backgroundColor: "yellow",
+    //borderRadius: RFPercentage(30), // Example background color
+    //height: 50, // Example height
+    flex:1,
     justifyContent: "center",
     alignItems: "center",
+   // alignContent:'center'
+   //paddingLeft:RFPercentage(2)
   },
 });
 

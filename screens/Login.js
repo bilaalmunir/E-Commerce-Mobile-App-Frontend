@@ -79,7 +79,10 @@ class Login extends Component {
         </View>
         <View style={styles.lowerPortion}>
           <View style={styles.inputContainer}>
-          <FontAwesome name="user-o" size={RFPercentage(2.5)} backgroundColor='white' padding={RFPercentage(1)} color="blue" paddingLeft={RFPercentage(16.5)} />
+          <View style={{flex:0.3, alignItems:'center'}}>
+          <View style={{ borderRadius: RFPercentage(444.2), overflow: 'hidden' , }}>
+          <FontAwesome name="user-o" size={RFPercentage(2.5)} backgroundColor='white'  width={RFPercentage(4.2)}  padding={RFPercentage(1)} color="blue"  />
+          </View></View>
             <TextInput
               style={styles.input}
               placeholder="Username"

@@ -75,27 +75,26 @@ console.log("detail id nai ai");
 this.setState({ error: true });
 }
 };
-    render (){
-        
-        return (
-            <View>
-              {this.state.cars && this.state.cars.length > 0 ? (
-                      <ScrollView>
-                          {this.state.cars.map((car) => (
-                              <TouchableOpacity key={car.ID} onPress={() => this.showDetails(car)}>
-                              
-                                  <View style={styles.carBox}>
-                                      <Text style={styles.carName}>Car Name: {car.carName}</Text>
-                                  </View>
-                              </TouchableOpacity>
-                          ))}
-                      </ScrollView>
-                  ) : (
-                      <Text>No cars available</Text>
-                  )}
-            </View>
-            );
-    };
+render (){
+  return (
+      <View>
+          {this.state.cars && this.state.cars.length > 0 ? (
+              <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+                  {this.state.cars.map((car, index) => (
+                      <TouchableOpacity key={car.ID} onPress={() => this.showDetails(car)}>
+                          <View style={[styles.carBox, index % 2 !== 0 && styles.rightMargin]}>
+                              <Text style={styles.carName}>Car Name: {car.carName}</Text>
+                          </View>
+                      </TouchableOpacity>
+                  ))}
+              </ScrollView>
+          ) : (
+              <Text>No cars available</Text>
+          )}
+      </View>
+  );
+};
+
    
 
   
@@ -129,23 +128,42 @@ const styles = StyleSheet.create({
     color: "blue", // or any color you prefer
     textAlign: "right",
   },
-  carBox: {
-    borderWidth: 1,
-    borderColor: "gray",
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 10,
-    marginTop: 20,
-  },
-  carName: {
-    fontSize: 16,
-  },
+  // carBox: {
+  //   borderWidth: 1,
+  //   borderColor: "gray",
+  //   padding: 10,
+  //   borderRadius: 10,
+  //   marginBottom: 10,
+  //   marginTop: 20,
+  // },
+  // carName: {
+  //   fontSize: 16,
+  // },
   tabBar: {
     backgroundColor: "lightgrey", // Example background color
     height: 50, // Example height
     justifyContent: "center",
     alignItems: "center",
   },
+  scrollViewContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+},
+carBox: {
+    borderWidth: 1,
+    borderColor: "gray",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+    marginTop: 20,
+    width: "50%", // Each product occupies half of the container's width
+},
+carName: {
+    fontSize: 16,
+},
+rightMargin: {
+    marginRight: 10, // Add right margin to every second product
+},
 });
 
 export default AllProducts;
