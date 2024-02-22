@@ -79,9 +79,9 @@ class Mainpage extends Component {
   renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={{ backgroundColor: "khaki", width:RFPercentage(14),borderRadius:RFPercentage(5), height:RFPercentage(5.6),  }}
-      style={{ marginTop: RFPercentage(1),
-        marginLeft:RFPercentage(1.9),
+      indicatorStyle={{ backgroundColor: "khaki", width:RFPercentage(14),borderRadius:RFPercentage(5), height:RFPercentage(5.6)}}
+      style={{ marginTop: RFPercentage(2),
+        marginLeft:RFPercentage(3.7),
         backgroundColor: "white", 
         width:RFPercentage(41),
     borderRadius: RFPercentage(4),
@@ -107,15 +107,17 @@ class Mainpage extends Component {
         style={styles.profile}
       />
             <Text style={styles.username}>Welcome back {user.username}!</Text>
-          </View>
+          </View >
+        
           <TabView
             navigationState={this.state}
             renderScene={this.renderScene}
             onIndexChange={(index) => this.setState({ index })}
-            initialLayout={{ width: Dimensions.get("window").width }}
+            initialLayout={{ width: Dimensions.get("window").width  }}
             renderTabBar={this.renderTabBar}
             tabBarStyle={styles.tabBar}
           />
+          <View style={{width:'100%', backgroundColor:'black'}}></View>
           
         </View>
       </SafeAreaView>
@@ -126,33 +128,41 @@ class Mainpage extends Component {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "#020403",
+    backgroundColor: "white",
   },
   profile:{
     width:RFPercentage(6),
     height:RFPercentage(6),
     borderRadius:RFPercentage(6),
     borderWidth:RFPercentage(0.5),
-    borderColor:'khaki'
+    borderColor:'black'
   },
   container: {
     flex: 1,
-    paddingTop: 20,
-    padding: 20,
-    backgroundColor: "#020403",
+   // paddingTop: 20,
+   // padding: 20,
+    backgroundColor: "#004b49",
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
+    padding: RFPercentage(1.5),
     alignItems: "center",
-    marginBottom: 10,
+    width: RFPercentage(50),
+    height:RFPercentage(8),
+    //marginBottom: 10,
+    backgroundColor:'gray'
   },
   username: {
     fontSize: RFPercentage(2),
     fontWeight: "bold",
     textAlign: "left",
-    color:"khaki"
+    color:"Black",
+    textDecorationStyle:'solid'
     //paddingTop: RFPercentage(1),
+  },
+  Nav:{
+    //padding:RFPercentage(2)
   },
   tabBar: {
     //backgroundColor: "yellow",
@@ -161,6 +171,8 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent: "center",
     alignItems: "center",
+   // marginLeft:RFPercentage(10)
+   // padding:RFPercentage(20)
    // alignContent:'center'
    //paddingLeft:RFPercentage(2)
   },

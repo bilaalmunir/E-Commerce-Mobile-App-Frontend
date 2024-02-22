@@ -1,3 +1,5 @@
+const link="192.168.76.7"
+
 export async function userSignup(username, firstname, lastname, email, password, profilePicture) {
     try {
         console.log("handling sign up now");
@@ -10,7 +12,7 @@ export async function userSignup(username, firstname, lastname, email, password,
         formData.append('password', password);
         formData.append('profilePicture', profilePicture);
 
-        const response = await fetch('http://192.168.189.7:8000/registerUser', {
+        const response = await fetch(`http://${link}:8000/registerUser`, {
             method: 'POST',
             body: formData,
         });
@@ -24,7 +26,7 @@ export async function userSignup(username, firstname, lastname, email, password,
 
 export async function userLogin(username,password){
     try {
-        const response = await fetch(`http://192.168.189.7:8000/loginUser?username=${username}&password=${password}`, {
+        const response = await fetch(`http://${link}:8000/loginUser?username=${username}&password=${password}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'Application/json',
@@ -40,7 +42,7 @@ catch(error){
 
 export async function addProduct(carName,model,color,price,userId){
     try{
-        const carInfo = await fetch(`http://192.168.189.7:8000/addCar?carName=${carName}&model=${model}&color=${color}&price=${price}&userId=${userId}`, {
+        const carInfo = await fetch(`http://${link}:8000/addCar?carName=${carName}&model=${model}&color=${color}&price=${price}&userId=${userId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'Application/json',
@@ -60,7 +62,7 @@ export async function addProduct(carName,model,color,price,userId){
 
 export async function setWishlistItem(userId,productId){
     try{
-        const response = await fetch(`http://192.168.189.7:8000/setWishlistItem?userId=${userId}&productId=${productId}`,
+        const response = await fetch(`http://${link}:8000/setWishlistItem?userId=${userId}&productId=${productId}`,
     {
         method: 'POST',
         headers: {
@@ -82,7 +84,7 @@ export async function setWishlistItem(userId,productId){
 
   export async function addComment(productId,userId,comment){
     try{
-        const response = await fetch(`http://192.168.189.7:8000/postComment?productId=${productId}&userId=${userId}&com=${comment}`,
+        const response = await fetch(`http://${link}:8000/postComment?productId=${productId}&userId=${userId}&com=${comment}`,
     {
         method: 'POST',
         headers: {

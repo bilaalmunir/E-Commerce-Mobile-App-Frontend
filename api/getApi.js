@@ -1,6 +1,7 @@
+const link="192.168.76.7"
 export async function getProducts(){
     try {
-        const res = await fetch(`http://192.168.189.7:8000/getAllCars`, {
+        const res = await fetch(`http://${link}:8000/getAllCars`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'Application/json',
@@ -14,7 +15,7 @@ export async function getProducts(){
 
 export async function getUnsoldProducts(){
     try {
-        const res = await fetch(`http://192.168.189.7:8000/getAllUnsoldCars`, {
+        const res = await fetch(`http://${link}:8000/getAllUnsoldCars`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'Application/json',
@@ -31,7 +32,7 @@ export async function getUnsoldProducts(){
 
 export async function getSoldProducts(){
     try {
-        const res = await fetch(`http://192.168.189.7:8000/getAllSoldCars`, {
+        const res = await fetch(`http://${link}:8000/getAllSoldCars`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'Application/json',
@@ -47,7 +48,7 @@ export async function getSoldProducts(){
 
 export async function getCommentsForPost(productId){
     try {
-        const res = await fetch(`http://192.168.189.7:8000/getComments?porductId=${productId}`, {
+        const res = await fetch(`http://${link}:8000/getComments?porductId=${productId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'Application/json',

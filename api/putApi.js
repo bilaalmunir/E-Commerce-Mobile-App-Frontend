@@ -1,6 +1,7 @@
+const link="192.168.76.7"
 export async function buyCarr(productId,userId){
     try{const response = await fetch(
-        `http://192.168.189.7:8000/buyCar?ID=${productId}&userID=${userId}`,
+        `http://${link}:8000/buyCar?ID=${productId}&userID=${userId}`,
         {
           method: "PUT",
           headers: {
@@ -20,7 +21,7 @@ export async function buyCarr(productId,userId){
 export async function removeFromWishlist(userId,productId){
   try{
     const response = await fetch(
-    `http://192.168.189.7:8000/removeWishlistItem?userId=${userId}&productId=${productId}`,
+    `http://${link}:8000/removeWishlistItem?userId=${userId}&productId=${productId}`,
     {
       method: "PUT",
       headers: {

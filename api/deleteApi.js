@@ -1,7 +1,9 @@
+const link="192.168.76.7"
+
 export async function deleteProduct(productId){
     try{
         const response = await fetch(
-        `http://192.168.189.7:8000/deleteCar?carId=${productId}`,
+        `http://${link}:8000/deleteCar?carId=${productId}`,
         {
           method: "DELETE",
           headers: {

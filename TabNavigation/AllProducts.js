@@ -6,164 +6,144 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  Dimensions, 
-  RefreshControl
+  Dimensions,
+  RefreshControl,
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { getProducts } from "../api/getApi";
-
+import { FlashList } from "@shopify/flash-list";
+import { RFPercentage } from "react-native-responsive-fontsize";
 class AllProducts extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          error: false,
-          cars: [],
-          isFetching: false,
-          refreshing: false,
-          index: 0,
-        };
-        this.prevState = { cars: [] };
-      }
-    
-      componentDidMount() {
-        this.getP();
-      }
-      componentDidUpdate(prevProps, prevState) {
-        if (this.state.cars !== prevState.cars && !this.state.isFetching) {
-          //console.log("if chal rha hai?");
-          this.setState({ isFetching: true }, () => {
-            setTimeout(() => {
-           //   console.log("fetching true");
-              this.setState({ isFetching: false });
-              this.getP();
-            }, 1000);
-          });
-        }
-      }
-      handleRefresh = () => {
-        this.setState({ refreshing: true }, () => {
-            this.getP(); 
-        });
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: false,
+      cars: [],
+      isFetching: false,
+      refreshing: false,
+      index: 0,
+    };
+    this.prevState = { cars: [] };
+  }
+
+  componentDidMount() {
+    this.getP();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.cars !== prevState.cars && !this.state.isFetching) {
+      //console.log("if chal rha hai?");
+      this.setState({ isFetching: true }, () => {
+        setTimeout(() => {
+          //   console.log("fetching true");
+          this.setState({ isFetching: false });
+          this.getP();
+        }, 1000);
+      });
     }
-    getP = async () => {
-      try {
-          const json = await getProducts();
-         // console.log("products:", JSON.stringify(json));
-          if (json) {
-              this.setState({ cars: json, isFetching: false, refreshing: false });
-          } else {
-              console.log("data nai aya");
-              this.setState({ isFetching: false, refreshing: false });
-          }
-      } catch (error) {
-          console.error("Error fetching data:", error);
-          this.setState({ isFetching: false, refreshing: false });
+  }
+  handleRefresh = () => {
+    this.setState({ refreshing: true }, () => {
+      this.getP();
+    });
+  };
+  getP = async () => {
+    try {
+      const json = await getProducts();
+      // console.log("products:", JSON.stringify(json));
+      if (json) {
+        this.setState({ cars: json, isFetching: false, refreshing: false });
+      } else {
+        console.log("data nai aya");
+        this.setState({ isFetching: false, refreshing: false });
       }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      this.setState({ isFetching: false, refreshing: false });
     }
-    
-showDetails = (detail) => {
-  const{navigate} = this.props;
- console.log("user",this.props.user)
-if (detail.id) {
-console.log("car id" + detail.id);
-navigate.navigate("Cardetails", {
-  detail: detail,
-  user: this.props.user,
-});
-} else {
-console.log("detail id nai ai");
-this.setState({ error: true });
-}
-};
-render (){
-  return (
-      <View>
-          {this.state.cars && this.state.cars.length > 0 ? (
-              <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-                  {this.state.cars.map((car, index) => (
-                      <TouchableOpacity key={car.ID} onPress={() => this.showDetails(car)}>
-                          <View style={[styles.carBox, index % 2 !== 0 && styles.rightMargin]}>
-                              <Text style={styles.carName}>Car Name: {car.carName}</Text>
-                          </View>
-                      </TouchableOpacity>
-                  ))}
-              </ScrollView>
-          ) : (
-              <Text>No cars available</Text>
-          )}
+  };
+  showDetails = (detail) => {
+    const { navigate } = this.props;
+    console.log("user", this.props.user);
+    if (detail.id) {
+      console.log("car id" + detail.id);
+      navigate.navigate("Cardetails", {
+        detail: detail,
+        user: this.props.user,
+      });
+    } else {
+      console.log("detail id nai ai");
+      this.setState({ error: true });
+    }
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.state.cars && this.state.cars.length > 0 ? (
+          <FlashList
+            data={this.state.cars}
+            estimatedItemSize={10}
+            numColumns={2}
+            renderItem={({ item }) => {
+              return (
+                  <TouchableOpacity
+                    key={item.ID}
+                    onPress={() => this.showDetails(item)}
+                    style={styles.carBox}
+                  >
+                    <View>
+                      <Text style={styles.carName}>
+                        Car Name: {item.carName}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+              );
+            }}
+          />
+        ) : (
+          <Text>No cars available</Text>
+        )}
       </View>
-  );
-};
-
-   
-
-  
+    );
+  }
 }
+
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-    backgroundColor: "black",
-  },
   container: {
     flex: 1,
-    paddingTop: 20,
-    padding: 20,
-    backgroundColor: "white",
-  },
-  header: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 10,
-  },
-  username: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "left",
-    paddingTop: 20,
-  },
-  logOut: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "blue", // or any color you prefer
-    textAlign: "right",
-  },
-  // carBox: {
-  //   borderWidth: 1,
-  //   borderColor: "gray",
-  //   padding: 10,
-  //   borderRadius: 10,
-  //   marginBottom: 10,
-  //   marginTop: 20,
-  // },
-  // carName: {
-  //   fontSize: 16,
-  // },
-  tabBar: {
-    backgroundColor: "lightgrey", // Example background color
-    height: 50, // Example height
     justifyContent: "center",
-    alignItems: "center",
+    margin:RFPercentage(1),
+    marginTop:RFPercentage(1.5)
+    //justifyContent:'space-evenly',
+
+    // padding: RFPercentage(2)
+    //backgroundColor: "pink",
+  },
+  leftSide: {
+    flex: 0.5,
+    //backgroundColor: 'lightblue',
+    //width:'100%'
+  },
+  rightSide: {
+    flex: 0.5,
+    //backgroundColor: 'red',
   },
   scrollViewContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-},
-carBox: {
+  },
+  carBox: {
     borderWidth: 1,
-    borderColor: "gray",
-    padding: 10,
+    borderColor: "white",
+    padding: RFPercentage(1),
     borderRadius: 10,
-    marginBottom: 10,
-    marginTop: 20,
-    width: "50%", // Each product occupies half of the container's width
-},
-carName: {
-    fontSize: 16,
-},
-rightMargin: {
-    marginRight: 10, // Add right margin to every second product
-},
+    // marginBottom: 10,
+    height: RFPercentage(25),
+    margin:RFPercentage(0.5),
+    flex:1
+  },
 });
 
 export default AllProducts;
