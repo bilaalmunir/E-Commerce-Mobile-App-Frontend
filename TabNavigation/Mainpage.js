@@ -8,7 +8,9 @@ import {
   SafeAreaView,
   Dimensions, 
   Image,
-  RefreshControl
+  RefreshControl,
+  StatusBar
+
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { getProducts } from "../api/getApi";
@@ -99,28 +101,27 @@ class Mainpage extends Component {
     console.log("user:" + user.userID);
     //console.log("products data in state:"+ this.state.cars)
     return (
+      <>
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.container}>
           <View style={styles.header}>
-          <Image
-        source={require('../Images/profile.jpg')} 
-        style={styles.profile}
-      />
-            <Text style={styles.username}>Welcome back {user.username}!</Text>
-          </View >
-        
+            <Image
+              source={require('../Images/profile.jpg')}
+              style={styles.profile} />
+            <Text style={styles.username}>Welcome back  {user.username}!</Text>
+          </View>
+
           <TabView
             navigationState={this.state}
             renderScene={this.renderScene}
             onIndexChange={(index) => this.setState({ index })}
-            initialLayout={{ width: Dimensions.get("window").width  }}
+            initialLayout={{ width: Dimensions.get("window").width }}
             renderTabBar={this.renderTabBar}
-            tabBarStyle={styles.tabBar}
-          />
-          <View style={{width:'100%', backgroundColor:'black'}}></View>
-          
+            tabBarStyle={styles.tabBar} />
+          <View style={{ width: '100%', backgroundColor: 'black' }}></View>
+
         </View>
-      </SafeAreaView>
+      </SafeAreaView></>
     );
   }
 }
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
     backgroundColor: "white",
+     paddingTop: StatusBar.currentHeight 
   },
   profile:{
     width:RFPercentage(6),
@@ -139,9 +141,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-   // paddingTop: 20,
-   // padding: 20,
-    backgroundColor: "#004b49",
   },
   header: {
     flexDirection: "row",
@@ -151,7 +150,7 @@ const styles = StyleSheet.create({
     width: RFPercentage(50),
     height:RFPercentage(8),
     //marginBottom: 10,
-    backgroundColor:'gray'
+    backgroundColor:'white',
   },
   username: {
     fontSize: RFPercentage(2),
@@ -165,16 +164,9 @@ const styles = StyleSheet.create({
     //padding:RFPercentage(2)
   },
   tabBar: {
-    //backgroundColor: "yellow",
-    //borderRadius: RFPercentage(30), // Example background color
-    //height: 50, // Example height
     flex:1,
     justifyContent: "center",
     alignItems: "center",
-   // marginLeft:RFPercentage(10)
-   // padding:RFPercentage(20)
-   // alignContent:'center'
-   //paddingLeft:RFPercentage(2)
   },
 });
 

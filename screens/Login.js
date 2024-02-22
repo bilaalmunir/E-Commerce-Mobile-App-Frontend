@@ -68,7 +68,7 @@ class Login extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor="black" />
+        
         <Animated.View style={[styles.blur, { opacity: blurOpacity }]} />
         <View style={styles.upperPortion}>
         <Image

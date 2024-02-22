@@ -1,28 +1,27 @@
 import { View,Text,Button,Pressable,StyleSheet} from 'react-native';
 import React, {Component,PureComponent} from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 
 class FrontPage extends PureComponent {
     render(){
         const {navigation} = this.props;
         return(
-            <View style={styles.container}>
-            <Text style={styles.title}>Hey!</Text>
-            <Text style={styles.discription}>Welcome to my Ecommerce Mobile App. Which is built on ReactNative and Springboot.</Text>
-            <View style={styles.buttonContainrs}>
-            <Pressable  style={
-                ({ pressed }) => [
-                            styles.button,
-                            { backgroundColor: pressed ? 'gray' : 'black' }
-                        ]} title="Login" onPress={() => navigation.replace('Login')}><Text style={styles.buttonText}>Log In</Text></Pressable>
-            <Pressable style={
-                ({ pressed }) => [
-                            styles.button,
-                            { backgroundColor: pressed ? 'gray' : 'black' }
-                        ]} title='SignUp' onPress={() => navigation.replace('Signup')}><Text style={styles.buttonText}>Sign Up</Text></Pressable> 
-            </View>
+            <><StatusBar barStyle="dark-content" backgroundColor="white" /><View style={styles.container}>
+                <Text style={styles.title}>Hey!</Text>
+                <Text style={styles.discription}>Welcome to my Ecommerce Mobile App. Which is built on ReactNative and Springboot.</Text>
+                <View style={styles.buttonContainrs}>
+                    <Pressable style={({ pressed }) => [
+                        styles.button,
+                        { backgroundColor: pressed ? 'gray' : 'black' }
+                    ]} title="Login" onPress={() => navigation.replace('Login')}><Text style={styles.buttonText}>Log In</Text></Pressable>
+                    <Pressable style={({ pressed }) => [
+                        styles.button,
+                        { backgroundColor: pressed ? 'gray' : 'black' }
+                    ]} title='SignUp' onPress={() => navigation.replace('Signup')}><Text style={styles.buttonText}>Sign Up</Text></Pressable>
+                </View>
 
-            </View>
+            </View></>
 
         );
     }

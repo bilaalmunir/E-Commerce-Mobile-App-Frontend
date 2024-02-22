@@ -91,11 +91,9 @@ class AllProducts extends Component {
                     onPress={() => this.showDetails(item)}
                     style={styles.carBox}
                   >
-                    <View>
-                      <Text style={styles.carName}>
-                        Car Name: {item.carName}
-                      </Text>
-                    </View>
+                    
+                     <View style={{backgroundColor:'gray', width:'100%' , padding:'50%'}} ></View>
+                   
                   </TouchableOpacity>
               );
             }}
@@ -116,20 +114,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin:RFPercentage(1),
     marginTop:RFPercentage(1.5)
-    //justifyContent:'space-evenly',
-
-    // padding: RFPercentage(2)
-    //backgroundColor: "pink",
   },
-  leftSide: {
-    flex: 0.5,
-    //backgroundColor: 'lightblue',
-    //width:'100%'
-  },
-  rightSide: {
-    flex: 0.5,
-    //backgroundColor: 'red',
-  },
+  
   scrollViewContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -140,9 +126,10 @@ const styles = StyleSheet.create({
     padding: RFPercentage(1),
     borderRadius: 10,
     // marginBottom: 10,
-    height: RFPercentage(25),
+    height: RFPercentage(30),
     margin:RFPercentage(0.5),
-    flex:1
+    flex:1,
+    backgroundColor:'black'
   },
 });
 
