@@ -92,8 +92,8 @@ class AllProducts extends Component {
                     style={styles.carBox}
                   >
                     
-                     <View style={{backgroundColor:'gray', width:'100%' , padding:'50%'}} ></View>
-                   
+                     <View style={{backgroundColor:'gray',flex:0.75,  }} ></View>
+                     <View style={{backgroundColor:'white',flex:0.35,  }}></View>
                   </TouchableOpacity>
               );
             }}
