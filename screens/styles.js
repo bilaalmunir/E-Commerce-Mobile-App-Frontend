@@ -59,7 +59,7 @@ export const styles = {
         height: RFPercentage(30),
         margin:RFPercentage(0.5),
         flex:1,
-        backgroundColor:'black'
+        backgroundColor:'purple'
       },
 
       //ADD CAR FORM
