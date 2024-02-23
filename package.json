@@ -30,7 +30,8 @@
     "react-native-screens": "^3.29.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-web": "~0.19.6",
-    "@shopify/flash-list": "1.4.3"
+    "@shopify/flash-list": "1.4.3",
+    "@react-native-picker/picker": "2.4.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

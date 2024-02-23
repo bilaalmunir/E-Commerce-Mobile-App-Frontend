@@ -81,7 +81,7 @@ class Mainpage extends Component {
   renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={{ backgroundColor: "khaki", width:RFPercentage(14),borderRadius:RFPercentage(5), height:RFPercentage(5.6)}}
+      indicatorStyle={{ backgroundColor: "#729899", width:RFPercentage(14),borderRadius:RFPercentage(5), height:RFPercentage(5.6)}}
       style={{ marginTop: RFPercentage(2),
         marginLeft:RFPercentage(3.7),
         backgroundColor: "white", 
@@ -102,6 +102,7 @@ class Mainpage extends Component {
     //console.log("products data in state:"+ this.state.cars)
     return (
       <>
+      
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.container}>
           <View style={styles.header}>
@@ -118,7 +119,6 @@ class Mainpage extends Component {
             initialLayout={{ width: Dimensions.get("window").width }}
             renderTabBar={this.renderTabBar}
             tabBarStyle={styles.tabBar} />
-          <View style={{ width: '100%', backgroundColor: 'black' }}></View>
 
         </View>
       </SafeAreaView></>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     height:RFPercentage(6),
     borderRadius:RFPercentage(6),
     borderWidth:RFPercentage(0.5),
-    borderColor:'black'
+    borderColor:'#729899'
   },
   container: {
     flex: 1,
