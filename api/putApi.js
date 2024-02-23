@@ -1,4 +1,4 @@
-const link="192.168.76.7"
+const link="192.168.191.7"
 export async function buyCarr(productId,userId){
     try{const response = await fetch(
         `http://${link}:8000/buyCar?ID=${productId}&userID=${userId}`,

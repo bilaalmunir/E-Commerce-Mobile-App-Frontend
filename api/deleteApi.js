@@ -1,4 +1,4 @@
-const link="192.168.76.7"
+const link="192.168.191.7"
 
 export async function deleteProduct(productId){
     try{
