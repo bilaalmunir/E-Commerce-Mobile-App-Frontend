@@ -8,11 +8,13 @@ import {
   SafeAreaView,
   Dimensions,
   RefreshControl,
+  Image
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { getProducts } from "../api/getApi";
 import { FlashList } from "@shopify/flash-list";
 import { RFPercentage } from "react-native-responsive-fontsize";
+import { styles } from "../screens/styles";
 class AllProducts extends Component {
   constructor(props) {
     super(props);
@@ -92,8 +94,14 @@ class AllProducts extends Component {
                     style={styles.carBox}
                   >
                     
-                     <View style={{backgroundColor:'gray',flex:0.75,  }} ></View>
-                     <View style={{backgroundColor:'white',flex:0.35,  }}></View>
+                     <View style={{flex:0.75 , justifyContent: 'center',   }} >
+                     <Image
+              source={require('../Images/profile.jpg')}
+              style={{width:'100%', height:'100%' , resizeMode:'cover', borderRadius:10}}/>
+                     </View>
+                     <View style={{backgroundColor:'white',flex:0.35,  }}>
+                      <Text>{item.carName}</Text>
+                     </View>
                   </TouchableOpacity>
               );
             }}
@@ -106,31 +114,5 @@ class AllProducts extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    margin:RFPercentage(1),
-    marginTop:RFPercentage(1.5)
-  },
-  
-  scrollViewContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  carBox: {
-    borderWidth: 1,
-    borderColor: "white",
-    padding: RFPercentage(1),
-    borderRadius: 10,
-    // marginBottom: 10,
-    height: RFPercentage(30),
-    margin:RFPercentage(0.5),
-    flex:1,
-    backgroundColor:'black'
-  },
-});
 
 export default AllProducts;
