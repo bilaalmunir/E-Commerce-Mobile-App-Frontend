@@ -1,5 +1,6 @@
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import { Dimensions,StatusBar } from 'react-native';
+import { Directions } from 'react-native-gesture-handler';
 export const styles = {
    
     //for mainpage products
@@ -89,4 +90,55 @@ export const styles = {
         marginTop: 20,
         fontSize: 16,
       },
+
+      //user profile
+
+      ProfileContainer: {
+        flex: 1 ,
+        
+    },
+    ProfileUpperContainer:{
+        flex:0.65,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    
+    ProfileUpperNestedUpper:{
+        flex:0.17,
+        justifyContent: 'flex-start',
+        alignItems:'center',
+        padding:RFPercentage(18),
+       //backgroundColor:'blue'
+    },
+    ProfileProfilePicture:{
+        marginTop: '25%',
+        width: RFPercentage(10), 
+        height: RFPercentage(15), 
+        borderRadius: RFPercentage(5),
+    },
+    ProfileUserName:{
+        marginTop:'10%',
+        opacity:0.7,
+        fontSize:RFPercentage(1.8)
+    },
+    ProfileBalance:{
+        marginTop:'7%',
+        width:'100%',
+        opacity:0.9,
+        fontSize:RFPercentage(3)
+    },
+    ProfileUpperNestedLower:{
+        flex:0.9,
+        flexDirection:'row',
+        alignItems:'center',
+        //backgroundColor:'black',
+    },
+
+    ProfileLowerContainer:{
+        flex:0.35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor:"yellow"
+    },
+    
 };
